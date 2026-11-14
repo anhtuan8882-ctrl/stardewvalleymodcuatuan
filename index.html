@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>5 câu hỏi về sở thích của anh Tún</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #090921;
+            color: #ffffff;
+            text-align: center;
+            padding: 30px 15px 60px;
+            margin: 0;
+        }
+        h1 {
+            color: #ca2424;
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+        /* Ảnh 1 chính ở đầu trang */
+        .main-img {
+            width: 240px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+            margin-bottom: 30px;
+        }
+        /* Khung chứa 5 câu hỏi xếp dọc */
+        .quiz-container {
+            max-width: 550px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .question-card {
+            background-color: #14143a;
+            border: 1px solid #2a2a66;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: left;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+        }
+        .question-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #e0dfff;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+        /* Hai nút đáp án A và B */
+        .options {
+            display: flex;
+            gap: 12px;
+        }
+        .opt-btn {
+            flex: 1;
+            padding: 12px 15px;
+            font-size: 16px;
+            font-weight: bold;
+            background-color: #1f1f52;
+            color: #ffffff;
+            border: 2px solid #3c3c8c;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+        }
+        .opt-btn:hover:not(:disabled) {
+            background-color: #2b2b6e;
+        }
+        
+        /* Hiệu ứng khi nút bị khóa (đã chọn) */
+        .opt-btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.85;
+        }
+
+        /* Hiệu ứng khi chọn ĐÚNG: chữ xanh + tích xanh */
+        .opt-btn.correct {
+            color: #00e676;
+            border-color: #00e676;
+            background-color: rgba(0, 230, 118, 0.15);
+        }
+        .opt-btn.correct::after {
+            content: " ✓";
+            font-size: 18px;
+            float: right;
+        }
+        /* Hiệu ứng khi chọn SAI: chữ đỏ */
+        .opt-btn.wrong {
+            color: #ff3d3d;
+            border-color: #ff3d3d;
+            background-color: rgba(255, 61, 61, 0.15);
+        }
+
+        /* Khung popup hiển thị ảnh 2 trong 2 giây khi chọn sai */
+        #wrongOverlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        #wrongOverlay img {
+            max-width: 85%;
+            max-height: 75%;
+            border-radius: 14px;
+            border: 3px solid #ff3d3d;
+            box-shadow: 0 0 25px rgba(255, 61, 61, 0.6);
+        }
+    </style>
+</head>
+<body>
+
+    <h1>5 câu hỏi về sở thích của anh Tún</h1>
+
+    <!-- Nhớ điền đúng tên file ẢNH 1 của bạn vào src="" -->
+    <img class="main-img" src="tun.jpg.jpg" alt="Ảnh anh Tún">
+
+    <div class="quiz-container">
+        <!-- CÂU 1 -->
+        <div class="question-card">
+            <p class="question-title">Câu 1: Món ăn anh Tún thích nhất là gì?</p>
+            <div class="options">
+                <button class="opt-btn" onclick="kiemTra(this, true)">A. Canh cải cà chua Uynn nấu</button>
+                <button class="opt-btn" onclick="kiemTra(this, false)">B. Canh trứng cà chua
+            </div>
+        </div>
+
+        <!-- CÂU 2 -->
+        <div class="question-card">
+            <p class="question-title">Câu 2: Lúc rảnh rỗi anh Tún thích làm gì nhất?</p>
+            <div class="options">
+                <button class="opt-btn" onclick="kiemTra(this, false)">A. Đi ngủ cả ngày
+                <button class="opt-btn" onclick="kiemTra(this, true)">B. Đi lượn Lác vứi Uynn</button>
+            </div>
+        </div>
+
+        <!-- CÂU 3 -->
+        <div class="question-card">
+            <p class="question-title">Câu 3: Đồ uống chân ái của anh Tún là?</p>
+            <div class="options">
+                <button class="opt-btn" onclick="kiemTra(this, true)">A. Trà sữa matcha</button>
+                <button class="opt-btn" onclick="kiemTra(this, false)">B. Sting
+            </div>
+        </div>
+
+        <!-- CÂU 4 -->
+        <div class="question-card">
+            <p class="question-title">Câu 4: Anh Tún mún Uyin bao nhiu cân?</p>
+            <div class="options">
+                <button class="opt-btn" onclick="kiemTra(this, false)">A. 48KG
+                <button class="opt-btn" onclick="kiemTra(this, true)">B. 52KG</button>
+            </div>
+        </div>
+
+        <!-- CÂU 5 -->
+        <div class="question-card">
+            <p class="question-title">Câu 5: Anh Tún yêu ai nhất</p>
+            <div class="options">
+                <button class="opt-btn" onclick="kiemTra(this, true)">A. Uynn Ủn Ỉn chứ ai</button>
+                <button class="opt-btn" onclick="kiemTra(this, false)">B. Uynn Píp Píp</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lớp phủ hiển thị Ảnh 2 khi bấm sai (nhớ điền đúng tên file ẢNH 2 vào src="") -->
+    <div id="wrongOverlay">
+        <img src="thefuck.jpg.jfif" alt="Chọn sai rồi!">
+    </div>
+
+    <script>
+        let boDemThoiGian;
+
+        function kiemTra(nutDuocBam, laDapAnDung) {
+            // Lấy cả 2 nút A và B trong câu hỏi hiện tại
+            const cacNutTrongCau = nutDuocBam.parentElement.querySelectorAll(".opt-btn");
+
+            // Khóa tất cả các nút trong câu này lại ngay lập tức để chỉ được chọn 1 lần
+            cacNutTrongCau.forEach(btn => {
+                btn.disabled = true;
+            });
+
+            if (laDapAnDung) {
+                // Nếu chọn ĐÚNG: hiện tích xanh và chữ chuyển xanh
+                nutDuocBam.classList.add("correct");
+            } else {
+                // Nếu chọn SAI: chữ chuyển đỏ và hiện ảnh 2 trong đúng 2 giây (2000ms)
+                nutDuocBam.classList.add("wrong");
+                const khungAnhSai = document.getElementById("wrongOverlay");
+                khungAnhSai.style.display = "flex";
+
+                clearTimeout(boDemThoiGian);
+                boDemThoiGian = setTimeout(function() {
+                    khungAnhSai.style.display = "none";
+                }, 2000);
+            }
+        }
+    </script>
+
+</body>
+</html>
