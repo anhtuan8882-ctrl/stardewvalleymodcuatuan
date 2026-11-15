@@ -34,4 +34,508 @@
             align-items: center;
             background: linear-gradient(90deg, rgba(0, 243, 255, 0.15), rgba(13, 18, 36, 0.95), rgba(255, 42, 95, 0.15));
             border-top: 2px solid #00f3ff;
-            border-bottom: 2
+            border-bottom: 2px solid #ff2a5f;
+            padding: 12px 24px;
+            clip-path: polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px);
+            font-size: 15px;
+            letter-spacing: 1.5px;
+        }
+        .hud-badge { color: #00f3ff; font-weight: bold; }
+        .hud-score { color: #ffea00; font-weight: bold; text-shadow: 0 0 10px rgba(255, 234, 0, 0.8); }
+
+        h1 {
+            color: #ffffff;
+            font-size: 28px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px #ff2a5f, 0 0 25px #ff2a5f;
+            margin-bottom: 22px;
+        }
+
+        .avatar-frame {
+            display: inline-block;
+            padding: 5px;
+            background: linear-gradient(135deg, #00f3ff, #ff2a5f);
+            clip-path: polygon(18px 0, calc(100% - 18px) 0, 100% 18px, 100% calc(100% - 18px), calc(100% - 18px) 100%, 18px 100%, 0 calc(100% - 18px), 0 18px);
+            margin-bottom: 32px;
+        }
+        .main-img {
+            display: block;
+            width: 220px;
+            clip-path: polygon(15px 0, calc(100% - 15px) 0, 100% 15px, 100% calc(100% - 15px), calc(100% - 15px) 100%, 15px 100%, 0 calc(100% - 15px), 0 15px);
+        }
+
+        .quiz-container {
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .question-card-border {
+            padding: 2px;
+            background: linear-gradient(135deg, #00f3ff 0%, #1d2b64 50%, #ff2a5f 100%);
+            clip-path: polygon(0 0, calc(100% - 22px) 0, 100% 22px, 100% 100%, 22px 100%, 0 calc(100% - 22px));
+        }
+
+        .question-card {
+            background: linear-gradient(160deg, #0c1124, #070914);
+            padding: 22px;
+            text-align: left;
+            clip-path: polygon(0 0, calc(100% - 21px) 0, 100% 21px, 100% 100%, 21px 100%, 0 calc(100% - 21px));
+        }
+
+        .quest-label {
+            display: inline-block;
+            font-size: 12px;
+            font-weight: bold;
+            color: #05070e;
+            background: #00f3ff;
+            padding: 3px 12px;
+            clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+            margin-bottom: 10px;
+        }
+
+        .question-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #f4f7ff;
+            margin-top: 0;
+            margin-bottom: 18px;
+        }
+
+        .options { display: flex; gap: 14px; }
+
+        .opt-btn {
+            flex: 1;
+            padding: 15px 18px;
+            font-family: 'Chakra Petch', Arial, sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+            background: linear-gradient(180deg, #162044, #0d132b);
+            color: #ffffff;
+            border: 1px solid #3c54a8;
+            border-left: 4px solid #00f3ff;
+            clip-path: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px);
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s;
+        }
+
+        .opt-btn:hover:not(:disabled) {
+            background: linear-gradient(180deg, #1f2e61, #131c3d);
+            border-color: #00f3ff;
+        }
+
+        .opt-btn:disabled { cursor: not-allowed; opacity: 0.65; }
+
+        .opt-btn.correct {
+            color: #00ff88;
+            border-color: #00ff88;
+            background: rgba(0, 255, 136, 0.25);
+        }
+        .opt-btn.correct::after { content: " ✔"; float: right; }
+
+        .opt-btn.wrong {
+            color: #ff2a5f;
+            border-color: #ff2a5f;
+            background: rgba(255, 42, 95, 0.25);
+            animation: shake 0.35s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-7px); }
+            50% { transform: translateX(7px); }
+            75% { transform: translateX(-4px); }
+        }
+
+        /* VÒNG QUAY GAMING */
+        .lucky-wheel-section {
+            max-width: 600px;
+            margin: 40px auto 0;
+            padding: 2px;
+            background: linear-gradient(135deg, #00f3ff 0%, #1d2b64 50%, #ff2a5f 100%);
+            clip-path: polygon(0 0, calc(100% - 24px) 0, 100% 24px, 100% 100%, 24px 100%, 0 calc(100% - 24px));
+            filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.8));
+        }
+
+        .lucky-wheel-container {
+            background: linear-gradient(160deg, #0c1124, #070914);
+            padding: 28px;
+            clip-path: polygon(0 0, calc(100% - 23px) 0, 100% 23px, 100% 100%, 23px 100%, 0 calc(100% - 23px));
+            text-align: center;
+        }
+
+        .wheel-title {
+            color: #00f3ff;
+            font-size: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 22px;
+            text-shadow: 0 0 10px rgba(0, 243, 255, 0.7);
+        }
+
+        .wheel-box {
+            position: relative;
+            width: 280px;
+            height: 280px;
+            margin: 0 auto 24px;
+        }
+
+        .wheel-pointer {
+            position: absolute;
+            top: -14px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 14px solid transparent;
+            border-right: 14px solid transparent;
+            border-top: 26px solid #ff2a5f;
+            z-index: 20;
+            filter: drop-shadow(0 0 8px #ff2a5f);
+        }
+
+        #canvasWheel {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 4px solid #3c54a8;
+            box-shadow: 0 0 25px rgba(0, 243, 255, 0.35);
+            transition: transform 4s cubic-bezier(0.15, 0.8, 0.15, 1);
+        }
+
+        .spin-btn {
+            background: linear-gradient(180deg, #162044, #0d132b);
+            color: #00ff88;
+            font-family: 'Chakra Petch', Arial, sans-serif;
+            font-size: 17px;
+            font-weight: bold;
+            padding: 14px 35px;
+            border: 1px solid #00ff88;
+            border-left: 4px solid #00ff88;
+            clip-path: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px);
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(0, 255, 136, 0.3);
+            transition: all 0.2s;
+        }
+
+        .spin-btn:hover:not(:disabled) {
+            background: linear-gradient(180deg, #1f2e61, #131c3d);
+            box-shadow: 0 0 25px rgba(0, 255, 136, 0.6);
+            transform: translateY(-2px);
+        }
+
+        .spin-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        #rewardPopup {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(4, 6, 14, 0.92);
+            backdrop-filter: blur(6px);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .reward-card {
+            background: linear-gradient(160deg, #0c1124, #070914);
+            border: 2px solid #00f3ff;
+            padding: 30px;
+            max-width: 90%;
+            width: 380px;
+            clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
+            box-shadow: 0 0 40px rgba(0, 243, 255, 0.5);
+            text-align: center;
+        }
+
+        .reward-title {
+            color: #ffea00;
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-shadow: 0 0 10px rgba(255, 234, 0, 0.7);
+        }
+
+        .reward-desc {
+            font-size: 17px;
+            color: #ffffff;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        .confirm-reward-btn {
+            background: linear-gradient(180deg, #162044, #0d132b);
+            color: #00ff88;
+            font-family: 'Chakra Petch', Arial, sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 12px 28px;
+            border: 1px solid #00ff88;
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(0, 255, 136, 0.4);
+        }
+
+        .confirm-reward-btn:hover {
+            background: linear-gradient(180deg, #1f2e61, #131c3d);
+            box-shadow: 0 0 25px rgba(0, 255, 136, 0.8);
+        }
+
+        .success-text {
+            color: #00ff88;
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .explosion-particle {
+            position: fixed;
+            pointer-events: none;
+            width: 10px;
+            height: 10px;
+            background: #ffea00;
+            clip-path: polygon(50% 0%, 65% 35%, 100% 50%, 65% 65%, 50% 100%, 35% 65%, 0% 50%, 35% 35%);
+            box-shadow: 0 0 12px #ffea00, 0 0 22px #ffffff;
+            z-index: 10005;
+            animation: explodeFly 0.8s ease-out forwards;
+        }
+
+        @keyframes explodeFly {
+            0% { opacity: 1; transform: translate(0, 0) scale(1.4) rotate(0deg); }
+            100% { opacity: 0; transform: translate(var(--tx), var(--ty)) scale(0.2) rotate(360deg); }
+        }
+
+        #wrongOverlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(4, 6, 14, 0.9); z-index: 9999; justify-content: center; align-items: center; flex-direction: column; text-align: center;
+        }
+        .alert-text { color: #ff2a5f; font-size: 26px; font-weight: bold; margin-bottom: 14px; text-shadow: 0 0 10px #ff2a5f; }
+        #wrongOverlay img { max-width: 85%; max-height: 65vh; border-radius: 10px; border: 3px solid #ff2a5f; }
+    </style>
+</head>
+<body>
+
+    <div class="game-hud">
+        <span class="hud-badge">▶ PLAYER: UYNN</span>
+        <span class="hud-score" id="scoreBoard">SCORE: 0 / 5</span>
+    </div>
+
+    <h1>5 câu hỏi về sở thích của anh Tún</h1>
+
+    <div class="avatar-frame">
+        <img class="main-img" src="tun.jpg.jpg" alt="Ảnh anh Tún">
+    </div>
+
+    <div class="quiz-container">
+        <div class="question-card-border">
+            <div class="question-card">
+                <span class="quest-label">MISSION 01</span>
+                <p class="question-title">Câu 1: Món ăn anh Tún thích nhất là gì?</p>
+                <div class="options">
+                    <button class="opt-btn" onclick="kiemTra(this, true)">A. Lạp xưởng nướng đá</button>
+                    <button class="opt-btn" onclick="kiemTra(this, false)">B. Xúc xích ponie</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-card-border">
+            <div class="question-card">
+                <span class="quest-label">MISSION 02</span>
+                <p class="question-title">Câu 2: Lúc ở vứi Uyin anh Tún thích làm gì nhất?</p>
+                <div class="options">
+                    <button class="opt-btn" onclick="kiemTra(this, false)">A. Ôm ngụ</button>
+                    <button class="opt-btn" onclick="kiemTra(this, true)">B. Rủ chơi game</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-card-border">
+            <div class="question-card">
+                <span class="quest-label">MISSION 03</span>
+                <p class="question-title">Câu 3: Cung hoàng đạo của anh Tún là?</p>
+                <div class="options">
+                    <button class="opt-btn" onclick="kiemTra(this, true)">A. Song Tử</button>
+                    <button class="opt-btn" onclick="kiemTra(this, false)">B. Ma kết</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-card-border">
+            <div class="question-card">
+                <span class="quest-label">MISSION 04</span>
+                <p class="question-title">Câu 4: Anh Tún thích đi đâu vào cuối tuần?</p>
+                <div class="options">
+                    <button class="opt-btn" onclick="kiemTra(this, false)">A. Ở nhà một mình</button>
+                    <button class="opt-btn" onclick="kiemTra(this, true)">B. Đi lượn phố cùng Uynn</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-card-border">
+            <div class="question-card">
+                <span class="quest-label">MISSION 05</span>
+                <p class="question-title">Câu 5: Anh Tún thích chơi game thể loại gì nhất?</p>
+                <div class="options">
+                    <button class="opt-btn" onclick="kiemTra(this, true)">A. Hành động thế giới mở</button>
+                    <button class="opt-btn" onclick="kiemTra(this, false)">B. Sinh tồn thế giới mở</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- VÒNG QUAY MAY MẮN GAMING -->
+    <div class="lucky-wheel-section">
+        <div class="lucky-wheel-container">
+            <div class="wheel-title">✨ Vòng quay may mắn nhận quà từ anh iu ✨</div>
+            <div class="wheel-box">
+                <div class="wheel-pointer"></div>
+                <canvas id="canvasWheel" width="300" height="300"></canvas>
+            </div>
+            <button class="spin-btn" id="spinBtn" onclick="quayVongQuay()">QUAY NGAY (1 LẦN)</button>
+        </div>
+    </div>
+
+    <div id="rewardPopup">
+        <div class="reward-card">
+            <div class="reward-title">🎉 QUÀ TẶNG BẤT NGỜ!</div>
+            <div class="reward-desc" id="rewardText">Chúc mừng iu quay trúng...</div>
+            <button class="confirm-reward-btn" id="confirmBtn" onclick="xacNhanThuong()">Xác Nhận</button>
+            <div class="success-text" id="successMsg">✔ Xác nhận thành công!</div>
+        </div>
+    </div>
+
+    <div id="wrongOverlay">
+        <div class="alert-text">chọn sai rồi đồ hâm</div>
+        <img src="thefuck.jpg.jfif" alt="Chọn sai rồi!">
+    </div>
+
+    <script>
+        let boDemThoiGian;
+        let diemSo = 0;
+
+        const canvas = document.getElementById("canvasWheel");
+        const ctx = canvas.getContext("2d");
+        const danhSachGiai = [
+            { text: "Đi ăn nướng", color: "#ff2a5f" },
+            { text: "Đi lượn Lác", color: "#00f3ff" },
+            { text: "Đi vè ngụ", color: "#ffea00" },
+            { text: "Đi Mộc Châu", color: "#162044" } // Ô Mộc Châu màu tối vô vọng
+        ];
+        let gocHienTai = 0;
+        let daQuay = false;
+
+        function veVongQuay(gocXoay = 0) {
+            let soPhan = danhSachGiai.length;
+            let gocMoiPhan = (2 * Math.PI) / soPhan;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            for (let i = 0; i < soPhan; i++) {
+                ctx.save();
+                ctx.beginPath();
+                ctx.moveTo(150, 150);
+                ctx.arc(150, 150, 145, gocXoay + i * gocMoiPhan, gocXoay + (i + 1) * gocMoiPhan);
+                ctx.closePath();
+                ctx.fillStyle = danhSachGiai[i].color;
+                ctx.fill();
+                ctx.strokeStyle = "#05070e";
+                ctx.lineWidth = 3;
+                ctx.stroke();
+
+                ctx.save();
+                ctx.translate(150, 150);
+                ctx.rotate(gocXoay + i * gocMoiPhan + gocMoiPhan / 2);
+                ctx.textAlign = "right";
+                ctx.fillStyle = (i === 3) ? "#445588" : "#05070e";
+                ctx.font = "bold 15px 'Chakra Petch', Arial";
+                ctx.fillText(danhSachGiai[i].text, 125, 6);
+                ctx.restore();
+                ctx.restore();
+            }
+        }
+        veVongQuay(0);
+
+        function taoHieuUngNoTung(x, y) {
+            const mauSacList = ["#00ff88", "#00f3ff", "#ffea00", "#ff2a5f", "#ffffff"];
+            for (let i = 0; i < 35; i++) {
+                const hatNo = document.createElement("div");
+                hatNo.className = "explosion-particle";
+                hatNo.style.left = x + "px";
+                hatNo.style.top = y + "px";
+                
+                let mau = mauSacList[Math.floor(Math.random() * mauSacList.length)];
+                hatNo.style.background = mau;
+                hatNo.style.boxShadow = `0 0 14px ${mau}, 0 0 25px #ffffff`;
+
+                const goc = Math.PI * 2 * Math.random();
+                const khoangCach = 60 + Math.random() * 110;
+                hatNo.style.setProperty("--tx", Math.cos(goc) * khoangCach + "px");
+                hatNo.style.setProperty("--ty", Math.sin(goc) * khoangCach + "px");
+
+                document.body.appendChild(hatNo);
+                setTimeout(() => hatNo.remove(), 800);
+            }
+        }
+
+        function quayVongQuay() {
+            if (daQuay) return;
+            daQuay = true;
+            document.getElementById("spinBtn").disabled = true;
+
+            // XÁC SUẤT TRÚNG MỘC CHÂU TUYỆT ĐỐI BẰNG 0 (Chỉ random các ô 0, 1, 2)
+            let cacODuocPhepTrung = [0, 1, 2];
+            let indexTrung = cacODuocPhepTrung[Math.floor(Math.random() * cacODuocPhepTrung.length)];
+
+            let phanThuongTrung = danhSachGiai[indexTrung].text;
+            let soPhan = danhSachGiai.length;
+            let gocMotPhan = 360 / soPhan; // 90 độ mỗi ô
+
+            // Toán học căn chỉnh chính xác để ô trúng dừng ngay dưới mũi tên ở đỉnh (270 độ)
+            let gocTamCuaO = indexTrung * gocMotPhan + gocMotPhan / 2;
+            let gocCanDich = 270 - gocTamCuaO;
+            let gocMucTieu = 360 * 6 + (gocCanDich - (gocHienTai % 360));
+
+            gocHienTai += gocMucTieu;
+            canvas.style.transform = `rotate(${gocHienTai}deg)`;
+
+            setTimeout(() => {
+                taoHieuUngNoTung(window.innerWidth / 2, window.innerHeight / 2);
+                document.getElementById("rewardText").innerText = `Chúc mừng iu quay trúng: "${phanThuongTrung}"!`;
+                document.getElementById("rewardPopup").style.display = "flex";
+            }, 4000);
+        }
+
+        function xacNhanThuong() {
+            document.getElementById("confirmBtn").style.display = "none";
+            document.getElementById("successMsg").style.display = "block";
+            setTimeout(() => {
+                document.getElementById("rewardPopup").style.display = "none";
+            }, 1800);
+        }
+
+        function kiemTra(nutDuocBam, laDapAnDung) {
+            const cacNutTrongCau = nutDuocBam.parentElement.querySelectorAll(".opt-btn");
+            cacNutTrongCau.forEach(btn => btn.disabled = true);
+
+            if (laDapAnDung) {
+                nutDuocBam.classList.add("correct");
+                diemSo++;
+                document.getElementById("scoreBoard").innerText = "SCORE: " + diemSo + " / 5";
+            } else {
+                nutDuocBam.classList.add("wrong");
+                const khungAnhSai = document.getElementById("wrongOverlay");
+                khungAnhSai.style.display = "flex";
+
+                clearTimeout(boDemThoiGian);
+                boDemThoiGian = setTimeout(() => {
+                    khungAnhSai.style.display = "none";
+                }, 2000);
+            }
+        }
+    </script>
+</body>
+</html>
