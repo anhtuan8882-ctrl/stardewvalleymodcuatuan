@@ -7,9 +7,7 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&display=swap');
 
-        * {
-            box-sizing: border-box;
-        }
+        * { box-sizing: border-box; }
 
         body {
             font-family: 'Chakra Petch', Arial, sans-serif;
@@ -17,10 +15,9 @@
             background-image: 
                 radial-gradient(circle at 15% 15%, rgba(0, 243, 255, 0.14), transparent 40%),
                 radial-gradient(circle at 85% 85%, rgba(255, 42, 95, 0.14), transparent 40%),
-                repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.015) 0px, rgba(255, 255, 255, 0.015) 2px, transparent 2px, transparent 10px),
                 linear-gradient(rgba(0, 243, 255, 0.04) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(0, 243, 255, 0.04) 1px, transparent 1px);
-            background-size: 100% 100%, 100% 100%, 20px 20px, 35px 35px, 35px 35px;
+            background-size: 100% 100%, 100% 100%, 35px 35px, 35px 35px;
             background-attachment: fixed;
             color: #ffffff;
             text-align: center;
@@ -29,7 +26,6 @@
             overflow-x: hidden;
         }
 
-        /* Thanh trạng thái Game (HUD) */
         .game-hud {
             max-width: 600px;
             margin: 0 auto 24px;
@@ -44,18 +40,9 @@
             font-size: 15px;
             letter-spacing: 1.5px;
         }
-        .hud-badge {
-            color: #00f3ff;
-            font-weight: bold;
-            text-shadow: 0 0 8px rgba(0, 243, 255, 0.6);
-        }
-        .hud-score {
-            color: #ffea00;
-            font-weight: bold;
-            text-shadow: 0 0 10px rgba(255, 234, 0, 0.8);
-        }
+        .hud-badge { color: #00f3ff; font-weight: bold; }
+        .hud-score { color: #ffea00; font-weight: bold; text-shadow: 0 0 10px rgba(255, 234, 0, 0.8); }
 
-        /* Tiêu đề chính */
         h1 {
             color: #ffffff;
             font-size: 28px;
@@ -65,14 +52,12 @@
             margin-bottom: 22px;
         }
 
-        /* Khung Ảnh 1 */
         .avatar-frame {
             display: inline-block;
             padding: 5px;
             background: linear-gradient(135deg, #00f3ff, #ff2a5f);
             clip-path: polygon(18px 0, calc(100% - 18px) 0, 100% 18px, 100% calc(100% - 18px), calc(100% - 18px) 100%, 18px 100%, 0 calc(100% - 18px), 0 18px);
             margin-bottom: 32px;
-            filter: drop-shadow(0 0 15px rgba(0, 243, 255, 0.45));
         }
         .main-img {
             display: block;
@@ -80,7 +65,6 @@
             clip-path: polygon(15px 0, calc(100% - 15px) 0, 100% 15px, 100% calc(100% - 15px), calc(100% - 15px) 100%, 15px 100%, 0 calc(100% - 15px), 0 15px);
         }
 
-        /* Danh sách 5 câu hỏi */
         .quiz-container {
             max-width: 600px;
             margin: 0 auto;
@@ -93,7 +77,6 @@
             padding: 2px;
             background: linear-gradient(135deg, #00f3ff 0%, #1d2b64 50%, #ff2a5f 100%);
             clip-path: polygon(0 0, calc(100% - 22px) 0, 100% 22px, 100% 100%, 22px 100%, 0 calc(100% - 22px));
-            filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.8));
         }
 
         .question-card {
@@ -101,7 +84,6 @@
             padding: 22px;
             text-align: left;
             clip-path: polygon(0 0, calc(100% - 21px) 0, 100% 21px, 100% 100%, 21px 100%, 0 calc(100% - 21px));
-            position: relative;
         }
 
         .quest-label {
@@ -113,7 +95,6 @@
             padding: 3px 12px;
             clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
             margin-bottom: 10px;
-            letter-spacing: 1.5px;
         }
 
         .question-title {
@@ -124,15 +105,10 @@
             margin-bottom: 18px;
         }
 
-        .options {
-            display: flex;
-            gap: 14px;
-        }
+        .options { display: flex; gap: 14px; }
 
         .opt-btn {
             flex: 1;
-            position: relative;
-            overflow: hidden;
             padding: 15px 18px;
             font-family: 'Chakra Petch', Arial, sans-serif;
             font-size: 16px;
@@ -143,64 +119,28 @@
             border-left: 4px solid #00f3ff;
             clip-path: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px);
             cursor: pointer;
-            transition: all 0.2s ease;
             text-align: left;
-        }
-
-        .opt-btn::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: -120%;
-            width: 70%;
-            height: 100%;
-            background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.65), rgba(0, 243, 255, 0.4), transparent);
-            transform: skewX(-25deg);
-        }
-
-        .opt-btn:hover:not(:disabled)::before,
-        .opt-btn.sparkle-active::before {
-            animation: shineSweep 0.65s ease-out;
-        }
-
-        @keyframes shineSweep {
-            0% { left: -120%; }
-            100% { left: 160%; }
+            transition: all 0.2s;
         }
 
         .opt-btn:hover:not(:disabled) {
             background: linear-gradient(180deg, #1f2e61, #131c3d);
             border-color: #00f3ff;
-            transform: translateY(-2px);
-            text-shadow: 0 0 8px rgba(0, 243, 255, 0.8);
         }
 
-        .opt-btn:disabled {
-            cursor: not-allowed;
-            opacity: 0.65;
-        }
+        .opt-btn:disabled { cursor: not-allowed; opacity: 0.65; }
 
         .opt-btn.correct {
-            opacity: 1 !important;
             color: #00ff88;
             border-color: #00ff88;
-            border-left-color: #00ff88;
-            background: linear-gradient(180deg, rgba(0, 255, 136, 0.28), rgba(0, 120, 65, 0.25));
-            text-shadow: 0 0 10px rgba(0, 255, 136, 0.9);
+            background: rgba(0, 255, 136, 0.25);
         }
-        .opt-btn.correct::after {
-            content: " ✔";
-            font-size: 18px;
-            float: right;
-        }
+        .opt-btn.correct::after { content: " ✔"; float: right; }
 
         .opt-btn.wrong {
-            opacity: 1 !important;
             color: #ff2a5f;
             border-color: #ff2a5f;
-            border-left-color: #ff2a5f;
-            background: linear-gradient(180deg, rgba(255, 42, 95, 0.3), rgba(130, 15, 45, 0.25));
-            text-shadow: 0 0 10px rgba(255, 42, 95, 0.9);
+            background: rgba(255, 42, 95, 0.25);
             animation: shake 0.35s ease;
         }
 
@@ -211,91 +151,253 @@
             75% { transform: translateX(-4px); }
         }
 
-        /* --- PHẦN VÒNG QUAY MAY MẮN RỰC RỠ --- */
+        /* Vòng quay */
         .lucky-wheel-section {
             max-width: 600px;
             margin: 40px auto 0;
             padding: 3px;
             background: linear-gradient(135deg, #ffea00, #ff2a5f, #00f3ff);
             clip-path: polygon(0 0, calc(100% - 24px) 0, 100% 24px, 100% 100%, 24px 100%, 0 calc(100% - 24px));
-            filter: drop-shadow(0 0 20px rgba(255, 234, 0, 0.4));
         }
-
         .lucky-wheel-container {
             background: linear-gradient(160deg, #0f122b, #050712);
             padding: 25px;
             clip-path: polygon(0 0, calc(100% - 23px) 0, 100% 23px, 100% 100%, 23px 100%, 0 calc(100% - 23px));
             text-align: center;
         }
-
-        .wheel-title {
-            color: #ffea00;
-            font-size: 20px;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin-bottom: 20px;
-            text-shadow: 0 0 12px rgba(255, 234, 0, 0.7);
-        }
-
-        .wheel-box {
-            position: relative;
-            width: 280px;
-            height: 280px;
-            margin: 0 auto 20px;
-        }
-
-        /* Mũi tên chỉ hướng quay */
+        .wheel-title { color: #ffea00; font-size: 20px; margin-bottom: 20px; text-shadow: 0 0 10px rgba(255, 234, 0, 0.7); }
+        .wheel-box { position: relative; width: 280px; height: 280px; margin: 0 auto 20px; }
         .wheel-pointer {
-            position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 0;
-            border-left: 14px solid transparent;
-            border-right: 14px solid transparent;
-            border-top: 24px solid #ffea00;
-            z-index: 20;
-            filter: drop-shadow(0 0 8px #ff2a5f);
+            position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+            width: 0; height: 0; border-left: 14px solid transparent; border-right: 14px solid transparent; border-top: 24px solid #ffea00; z-index: 20;
         }
-
-        #canvasWheel {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            border: 5px solid #00f3ff;
-            box-shadow: 0 0 25px rgba(0, 243, 255, 0.6);
-            transition: transform 4s cubic-bezier(0.15, 0.8, 0.15, 1);
-        }
-
+        #canvasWheel { width: 100%; height: 100%; border-radius: 50%; border: 5px solid #00f3ff; transition: transform 4s cubic-bezier(0.15, 0.8, 0.15, 1); }
         .spin-btn {
             background: linear-gradient(135deg, #ffea00, #ff7700);
-            color: #05070e;
-            font-family: 'Chakra Petch', Arial, sans-serif;
-            font-size: 18px;
-            font-weight: bold;
-            padding: 12px 35px;
-            border: none;
+            color: #05070e; font-size: 18px; font-weight: bold; padding: 12px 35px; border: none;
             clip-path: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px);
             cursor: pointer;
-            box-shadow: 0 0 15px rgba(255, 234, 0, 0.6);
-            transition: all 0.2s;
         }
+        .spin-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-        .spin-btn:hover:not(:disabled) {
-            transform: scale(1.06);
-            box-shadow: 0 0 25px rgba(255, 234, 0, 0.9);
-        }
-
-        .spin-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        /* Bảng Popup kết quả vòng quay rực rỡ */
         #rewardPopup {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 10
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(4, 6, 14, 0.92); backdrop-filter: blur(6px); z-index: 10000;
+            justify-content: center; align-items: center;
+        }
+        .reward-card {
+            background: #161b3d; border: 3px solid #ffea00; padding: 30px; border-radius: 16px; width: 380px; text-align: center;
+        }
+        .reward-title { color: #ffea00; font-size: 22px; margin-bottom: 15px; }
+        .reward-desc { color: #ffffff; font-size: 17px; margin-bottom: 25px; }
+        .confirm-reward-btn {
+            background: #00ff88; color: #05070e; font-size: 16px; font-weight: bold; padding: 10px 25px; border: none; border-radius: 8px; cursor: pointer;
+        }
+        .success-text { color: #00ff88; font-size: 16px; font-weight: bold; margin-top: 15px; display: none; }
+
+        #wrongOverlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(4, 6, 14, 0.9); z-index: 9999; justify-content: center; align-items: center; flex-direction: column; text-align: center;
+        }
+        .alert-text { color: #ff2a5f; font-size: 26px; font-weight: bold; margin-bottom: 14px; }
+        #wrongOverlay img { max-width: 85%; max-height: 65vh; border-radius: 10px; border: 3px solid #ff2a5f; }
+    </style>
+</head>
+<body>
+
+    <div class="game-hud">
+        <span class="hud-badge">▶ PLAYER: UYNN</span>
+        <span class="hud-score" id="scoreBoard">SCORE: 0 / 5</span>
+    </div>
+
+    <h1>5 câu hỏi về sở thích của anh Tún</h1>
+
+    <div class="avatar-frame">
+        <img class="main-img" src="tun.jpg.jpg" alt="Ảnh anh Tún">
+    </div>
+
+    <div class="quiz-container">
+        <div class="question-card-border">
+            <div class="question-card">
+                <span class="quest-label">MISSION 01</span>
+                <p class="question-title">Câu 1: Món ăn anh Tún thích nhất là gì?</p>
+                <div class="options">
+                    <button class="opt-btn" onclick="kiemTra(this, true)">A. Lạp xưởng nướng đá</button>
+                    <button class="opt-btn" onclick="kiemTra(this, false)">B. Xúc xích ponie</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-card-border">
+            <div class="question-card">
+                <span class="quest-label">MISSION 02</span>
+                <p class="question-title">Câu 2: Lúc ở vứi Uyin anh Tún thích làm gì nhất?</p>
+                <div class="options">
+                    <button class="opt-btn" onclick="kiemTra(this, false)">A. Ôm ngụ</button>
+                    <button class="opt-btn" onclick="kiemTra(this, true)">B. Rủ chơi game</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-card-border">
+            <div class="question-card">
+                <span class="quest-label">MISSION 03</span>
+                <p class="question-title">Câu 3: Cung hoàng đạo của anh Tún là?</p>
+                <div class="options">
+                    <button class="opt-btn" onclick="kiemTra(this, true)">A. Song Tử</button>
+                    <button class="opt-btn" onclick="kiemTra(this, false)">B. Ma kết</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-card-border">
+            <div class="question-card">
+                <span class="quest-label">MISSION 04</span>
+                <p class="question-title">Câu 4: Anh Tún thích đi đâu vào cuối tuần?</p>
+                <div class="options">
+                    <button class="opt-btn" onclick="kiemTra(this, false)">A. Ở nhà một mình</button>
+                    <button class="opt-btn" onclick="kiemTra(this, true)">B. Đi lượn phố cùng Uynn</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-card-border">
+            <div class="question-card">
+                <span class="quest-label">MISSION 05</span>
+                <p class="question-title">Câu 5: Anh Tún thích chơi game thể loại gì nhất?</p>
+                <div class="options">
+                    <button class="opt-btn" onclick="kiemTra(this, true)">A. Hành động thế giới mở</button>
+                    <button class="opt-btn" onclick="kiemTra(this, false)">B. Sinh tồn thế giới mở</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="lucky-wheel-section">
+        <div class="lucky-wheel-container">
+            <div class="wheel-title">✨ Vòng quay may mắn nhận quà từ anh iu ✨</div>
+            <div class="wheel-box">
+                <div class="wheel-pointer"></div>
+                <canvas id="canvasWheel" width="300" height="300"></canvas>
+            </div>
+            <button class="spin-btn" id="spinBtn" onclick="quayVongQuay()">QUAY NGAY (1 LẦN)</button>
+        </div>
+    </div>
+
+    <div id="rewardPopup">
+        <div class="reward-card">
+            <div class="reward-title">🎉 QUÀ TẶNG BẤT NGỜ!</div>
+            <div class="reward-desc" id="rewardText">Chúc mừng iu quay trúng...</div>
+            <button class="confirm-reward-btn" id="confirmBtn" onclick="xacNhanThuong()">Xác Nhận</button>
+            <div class="success-text" id="successMsg">✔ Xác nhận thành công!</div>
+        </div>
+    </div>
+
+    <div id="wrongOverlay">
+        <div class="alert-text">chọn sai rồi đồ hâm</div>
+        <img src="thefuck.jpg.jfif" alt="Chọn sai rồi!">
+    </div>
+
+    <script>
+        let boDemThoiGian;
+        let diemSo = 0;
+
+        const canvas = document.getElementById("canvasWheel");
+        const ctx = canvas.getContext("2d");
+        const danhSachGiai = [
+            { text: "Đi ăn nướng", color: "#ff2a5f" },
+            { text: "Đi lượn Lác", color: "#00f3ff" },
+            { text: "Đi vè ngụ", color: "#ffea00" },
+            { text: "Đi Mộc Châu", color: "#00ff88" }
+        ];
+        let gocHienTai = 0;
+        let daQuay = false;
+
+        function veVongQuay(gocXoay = 0) {
+            let soPhan = danhSachGiai.length;
+            let gocMoiPhan = (2 * Math.PI) / soPhan;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            for (let i = 0; i < soPhan; i++) {
+                ctx.save();
+                ctx.beginPath();
+                ctx.moveTo(150, 150);
+                ctx.arc(150, 150, 145, gocXoay + i * gocMoiPhan, gocXoay + (i + 1) * gocMoiPhan);
+                ctx.closePath();
+                ctx.fillStyle = danhSachGiai[i].color;
+                ctx.fill();
+                ctx.strokeStyle = "#05070e";
+                ctx.lineWidth = 3;
+                ctx.stroke();
+
+                ctx.save();
+                ctx.translate(150, 150);
+                ctx.rotate(gocXoay + i * gocMoiPhan + gocMoiPhan / 2);
+                ctx.textAlign = "right";
+                ctx.fillStyle = "#05070e";
+                ctx.font = "bold 15px 'Chakra Petch', Arial";
+                ctx.fillText(danhSachGiai[i].text, 125, 6);
+                ctx.restore();
+                ctx.restore();
+            }
+        }
+        veVongQuay(0);
+
+        function quayVongQuay() {
+            if (daQuay) return;
+            daQuay = true;
+            document.getElementById("spinBtn").disabled = true;
+
+            let rand = Math.random();
+            let indexTrung;
+            if (rand < 0.03) {
+                indexTrung = 3;
+            } else {
+                let conLai = [0, 1, 2];
+                indexTrung = conLai[Math.floor(Math.random() * conLai.length)];
+            }
+
+            let phanThuongTrung = danhSachGiai[indexTrung].text;
+            let soPhan = danhSachGiai.length;
+            let gocMotPhan = 360 / soPhan;
+            let gocMucTieu = 360 * 6 + (360 - (indexTrung * gocMotPhan + gocMotPhan / 2));
+
+            gocHienTai += gocMucTieu;
+            canvas.style.transform = `rotate(${gocHienTai}deg)`;
+
+            setTimeout(() => {
+                document.getElementById("rewardText").innerText = `Chúc mừng iu quay trúng: "${phanThuongTrung}"!`;
+                document.getElementById("rewardPopup").style.display = "flex";
+            }, 4000);
+        }
+
+        function xacNhanThuong() {
+            document.getElementById("confirmBtn").style.display = "none";
+            document.getElementById("successMsg").style.display = "block";
+            setTimeout(() => {
+                document.getElementById("rewardPopup").style.display = "none";
+            }, 1800);
+        }
+
+        function kiemTra(nutDuocBam, laDapAnDung) {
+            const cacNutTrongCau = nutDuocBam.parentElement.querySelectorAll(".opt-btn");
+            cacNutTrongCau.forEach(btn => btn.disabled = true);
+
+            if (laDapAnDung) {
+                nutDuocBam.classList.add("correct");
+                diemSo++;
+                document.getElementById("scoreBoard").innerText = "SCORE: " + diemSo + " / 5";
+            } else {
+                nutDuocBam.classList.add("wrong");
+                const khungAnhSai = document.getElementById("wrongOverlay");
+                khungAnhSai.style.display = "flex";
+
+                clearTimeout(boDemThoiGian);
+                boDemThoiGian = setTimeout(() => {
+                    khungAnhSai.style.display = "none";
+                }, 2000);
+            }
+        }
+    </script>
+</body>
+</html>
