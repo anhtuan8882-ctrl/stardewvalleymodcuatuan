@@ -1,541 +1,1301 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>5 câu hỏi & Vòng quay may mắn của anh Tún</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&display=swap');
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>anhtuan8882-ctrl/tuniuuyin</title>
+  <style>
+    :root {
+      --bg-canvas: #0d1117;
+      --bg-header: #010409;
+      --bg-subtle: #161b22;
+      --bg-btn: #21262d;
+      --bg-btn-hover: #30363d;
+      --bg-green: #238636;
+      --bg-green-hover: #2ea043;
+      --border-default: #30363d;
+      --border-muted: #21262d;
+      --text-primary: #e6edf3;
+      --text-secondary: #848d97;
+      --text-link: #4493f8;
+      --accent-orange: #f78166;
+      --accent-green: #3fb950;
+    }
 
-        * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-        body {
-            font-family: 'Chakra Petch', Arial, sans-serif;
-            background-color: #05070e;
-            background-image: 
-                radial-gradient(circle at 15% 15%, rgba(0, 243, 255, 0.14), transparent 40%),
-                radial-gradient(circle at 85% 85%, rgba(255, 42, 95, 0.14), transparent 40%),
-                linear-gradient(rgba(0, 243, 255, 0.04) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 243, 255, 0.04) 1px, transparent 1px);
-            background-size: 100% 100%, 100% 100%, 35px 35px, 35px 35px;
-            background-attachment: fixed;
-            color: #ffffff;
-            text-align: center;
-            padding: 25px 15px 75px;
-            margin: 0;
-            overflow-x: hidden;
-        }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+      background-color: var(--bg-canvas);
+      color: var(--text-primary);
+      font-size: 14px;
+      line-height: 1.5;
+    }
 
-        .game-hud {
-            max-width: 600px;
-            margin: 0 auto 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: linear-gradient(90deg, rgba(0, 243, 255, 0.15), rgba(13, 18, 36, 0.95), rgba(255, 42, 95, 0.15));
-            border-top: 2px solid #00f3ff;
-            border-bottom: 2px solid #ff2a5f;
-            padding: 12px 24px;
-            clip-path: polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px);
-            font-size: 15px;
-            letter-spacing: 1.5px;
-        }
-        .hud-badge { color: #00f3ff; font-weight: bold; }
-        .hud-score { color: #ffea00; font-weight: bold; text-shadow: 0 0 10px rgba(255, 234, 0, 0.8); }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-        h1 {
-            color: #ffffff;
-            font-size: 28px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            text-shadow: 0 0 10px #ff2a5f, 0 0 25px #ff2a5f;
-            margin-bottom: 22px;
-        }
+    button {
+      font-family: inherit;
+      cursor: pointer;
+      color: var(--text-primary);
+      background: none;
+      border: none;
+    }
 
-        .avatar-frame {
-            display: inline-block;
-            padding: 5px;
-            background: linear-gradient(135deg, #00f3ff, #ff2a5f);
-            clip-path: polygon(18px 0, calc(100% - 18px) 0, 100% 18px, 100% calc(100% - 18px), calc(100% - 18px) 100%, 18px 100%, 0 calc(100% - 18px), 0 18px);
-            margin-bottom: 32px;
-        }
-        .main-img {
-            display: block;
-            width: 220px;
-            clip-path: polygon(15px 0, calc(100% - 15px) 0, 100% 15px, 100% calc(100% - 15px), calc(100% - 15px) 100%, 15px 100%, 0 calc(100% - 15px), 0 15px);
-        }
+    /* Header */
+    .gh-header {
+      background-color: var(--bg-header);
+      border-bottom: 1px solid var(--border-default);
+      padding: 12px 16px 0 16px;
+    }
 
-        .quiz-container {
-            max-width: 600px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-        }
+    .gh-header-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
 
-        .question-card-border {
-            padding: 2px;
-            background: linear-gradient(135deg, #00f3ff 0%, #1d2b64 50%, #ff2a5f 100%);
-            clip-path: polygon(0 0, calc(100% - 22px) 0, 100% 22px, 100% 100%, 22px 100%, 0 calc(100% - 22px));
-        }
+    .gh-header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
 
-        .question-card {
-            background: linear-gradient(160deg, #0c1124, #070914);
-            padding: 22px;
-            text-align: left;
-            clip-path: polygon(0 0, calc(100% - 21px) 0, 100% 21px, 100% 100%, 21px 100%, 0 calc(100% - 21px));
-        }
+    .icon-btn {
+      width: 32px;
+      height: 32px;
+      border: 1px solid var(--border-default);
+      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-secondary);
+      background-color: transparent;
+    }
 
-        .quest-label {
-            display: inline-block;
-            font-size: 12px;
-            font-weight: bold;
-            color: #05070e;
-            background: #00f3ff;
-            padding: 3px 12px;
-            clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
-            margin-bottom: 10px;
-        }
+    .icon-btn:hover {
+      background-color: var(--bg-btn);
+      color: var(--text-primary);
+    }
 
-        .question-title {
-            font-size: 18px;
-            font-weight: bold;
-            color: #f4f7ff;
-            margin-top: 0;
-            margin-bottom: 18px;
-        }
+    .gh-logo {
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+    }
 
-        .options { display: flex; gap: 14px; }
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+    }
 
-        .opt-btn {
-            flex: 1;
-            padding: 15px 18px;
-            font-family: 'Chakra Petch', Arial, sans-serif;
-            font-size: 16px;
-            font-weight: bold;
-            background: linear-gradient(180deg, #162044, #0d132b);
-            color: #ffffff;
-            border: 1px solid #3c54a8;
-            border-left: 4px solid #00f3ff;
-            clip-path: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px);
-            cursor: pointer;
-            text-align: left;
-            transition: all 0.2s;
-        }
+    .breadcrumb a:hover {
+      text-decoration: underline;
+    }
 
-        .opt-btn:hover:not(:disabled) {
-            background: linear-gradient(180deg, #1f2e61, #131c3d);
-            border-color: #00f3ff;
-        }
+    .breadcrumb .repo-name {
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
 
-        .opt-btn:disabled { cursor: not-allowed; opacity: 0.65; }
+    .gh-header-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
 
-        .opt-btn.correct {
-            color: #00ff88;
-            border-color: #00ff88;
-            background: rgba(0, 255, 136, 0.25);
-        }
-        .opt-btn.correct::after { content: " ✔"; float: right; }
+    .search-box {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--border-default);
+      border-radius: 6px;
+      padding: 4px 10px;
+      width: 240px;
+      color: var(--text-secondary);
+      font-size: 13px;
+    }
 
-        .opt-btn.wrong {
-            color: #ff2a5f;
-            border-color: #ff2a5f;
-            background: rgba(255, 42, 95, 0.25);
-            animation: shake 0.35s ease;
-        }
+    .search-box input {
+      background: transparent;
+      border: none;
+      outline: none;
+      color: var(--text-primary);
+      width: 100%;
+      font-size: 13px;
+    }
 
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-7px); }
-            50% { transform: translateX(7px); }
-            75% { transform: translateX(-4px); }
-        }
+    .kbd-slash {
+      border: 1px solid var(--border-default);
+      border-radius: 4px;
+      padding: 0 5px;
+      font-size: 11px;
+      color: var(--text-secondary);
+    }
 
-        /* VÒNG QUAY GAMING */
-        .lucky-wheel-section {
-            max-width: 600px;
-            margin: 40px auto 0;
-            padding: 2px;
-            background: linear-gradient(135deg, #00f3ff 0%, #1d2b64 50%, #ff2a5f 100%);
-            clip-path: polygon(0 0, calc(100% - 24px) 0, 100% 24px, 100% 100%, 24px 100%, 0 calc(100% - 24px));
-            filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.8));
-        }
+    .header-divider {
+      width: 1px;
+      height: 20px;
+      background-color: var(--border-default);
+      margin: 0 2px;
+    }
 
-        .lucky-wheel-container {
-            background: linear-gradient(160deg, #0c1124, #070914);
-            padding: 28px;
-            clip-path: polygon(0 0, calc(100% - 23px) 0, 100% 23px, 100% 100%, 23px 100%, 0 calc(100% - 23px));
-            text-align: center;
-        }
+    .btn-split {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid var(--border-default);
+      border-radius: 6px;
+      height: 32px;
+      padding: 0 8px;
+      gap: 6px;
+      color: var(--text-secondary);
+    }
 
-        .wheel-title {
-            color: #00f3ff;
-            font-size: 20px;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin-bottom: 22px;
-            text-shadow: 0 0 10px rgba(0, 243, 255, 0.7);
-        }
+    .btn-split:hover {
+      background-color: var(--bg-btn);
+      color: var(--text-primary);
+    }
 
-        .wheel-box {
-            position: relative;
-            width: 280px;
-            height: 280px;
-            margin: 0 auto 24px;
-        }
+    .avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #c9f2ee 50%, #86d3c9 50%);
+      border: 1px solid var(--border-default);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
 
-        .wheel-pointer {
-            position: absolute;
-            top: -14px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 0;
-            border-left: 14px solid transparent;
-            border-right: 14px solid transparent;
-            border-top: 26px solid #ff2a5f;
-            z-index: 20;
-            filter: drop-shadow(0 0 8px #ff2a5f);
-        }
+    .avatar-sm {
+      width: 20px;
+      height: 20px;
+    }
 
-        #canvasWheel {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            border: 4px solid #3c54a8;
-            box-shadow: 0 0 25px rgba(0, 243, 255, 0.35);
-            transition: transform 4s cubic-bezier(0.15, 0.8, 0.15, 1);
-        }
+    .avatar-lg {
+      width: 24px;
+      height: 24px;
+    }
 
-        .spin-btn {
-            background: linear-gradient(180deg, #162044, #0d132b);
-            color: #00ff88;
-            font-family: 'Chakra Petch', Arial, sans-serif;
-            font-size: 17px;
-            font-weight: bold;
-            padding: 14px 35px;
-            border: 1px solid #00ff88;
-            border-left: 4px solid #00ff88;
-            clip-path: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px);
-            cursor: pointer;
-            box-shadow: 0 0 15px rgba(0, 255, 136, 0.3);
-            transition: all 0.2s;
-        }
+    /* Navigation Tabs */
+    .gh-nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
 
-        .spin-btn:hover:not(:disabled) {
-            background: linear-gradient(180deg, #1f2e61, #131c3d);
-            box-shadow: 0 0 25px rgba(0, 255, 136, 0.6);
-            transform: translateY(-2px);
-        }
+    .gh-nav::-webkit-scrollbar {
+      display: none;
+    }
 
-        .spin-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .nav-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      font-size: 14px;
+      color: var(--text-primary);
+      border-bottom: 2px solid transparent;
+      white-space: nowrap;
+      border-radius: 6px 6px 0 0;
+    }
 
-        #rewardPopup {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(4, 6, 14, 0.92);
-            backdrop-filter: blur(6px);
-            z-index: 10000;
-            justify-content: center;
-            align-items: center;
-        }
+    .nav-tab:hover {
+      background-color: rgba(177, 186, 196, 0.12);
+    }
 
-        .reward-card {
-            background: linear-gradient(160deg, #0c1124, #070914);
-            border: 2px solid #00f3ff;
-            padding: 30px;
-            max-width: 90%;
-            width: 380px;
-            clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
-            box-shadow: 0 0 40px rgba(0, 243, 255, 0.5);
-            text-align: center;
-        }
+    .nav-tab.active {
+      font-weight: 600;
+      border-bottom-color: var(--accent-orange);
+    }
 
-        .reward-title {
-            color: #ffea00;
-            font-size: 22px;
-            font-weight: bold;
-            margin-bottom: 15px;
-            text-shadow: 0 0 10px rgba(255, 234, 0, 0.7);
-        }
+    .nav-tab svg {
+      color: var(--text-secondary);
+    }
 
-        .reward-desc {
-            font-size: 17px;
-            color: #ffffff;
-            margin-bottom: 25px;
-            line-height: 1.5;
-        }
+    .nav-tab.active svg {
+      color: var(--text-primary);
+    }
 
-        .confirm-reward-btn {
-            background: linear-gradient(180deg, #162044, #0d132b);
-            color: #00ff88;
-            font-family: 'Chakra Petch', Arial, sans-serif;
-            font-size: 16px;
-            font-weight: bold;
-            padding: 12px 28px;
-            border: 1px solid #00ff88;
-            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
-            cursor: pointer;
-            box-shadow: 0 0 15px rgba(0, 255, 136, 0.4);
-        }
+    /* Main Container */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 20px 24px 48px 24px;
+    }
 
-        .confirm-reward-btn:hover {
-            background: linear-gradient(180deg, #1f2e61, #131c3d);
-            box-shadow: 0 0 25px rgba(0, 255, 136, 0.8);
-        }
+    /* Repo Title Row */
+    .repo-title-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border-muted);
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
 
-        .success-text {
-            color: #00ff88;
-            font-size: 16px;
-            font-weight: bold;
-            margin-top: 15px;
-            display: none;
-        }
+    .repo-title-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
-        .explosion-particle {
-            position: fixed;
-            pointer-events: none;
-            width: 10px;
-            height: 10px;
-            background: #ffea00;
-            clip-path: polygon(50% 0%, 65% 35%, 100% 50%, 65% 65%, 50% 100%, 35% 65%, 0% 50%, 35% 35%);
-            box-shadow: 0 0 12px #ffea00, 0 0 22px #ffffff;
-            z-index: 10005;
-            animation: explodeFly 0.8s ease-out forwards;
-        }
+    .repo-title-left h1 {
+      font-size: 20px;
+      font-weight: 600;
+    }
 
-        @keyframes explodeFly {
-            0% { opacity: 1; transform: translate(0, 0) scale(1.4) rotate(0deg); }
-            100% { opacity: 0; transform: translate(var(--tx), var(--ty)) scale(0.2) rotate(360deg); }
-        }
+    .badge-public {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      border: 1px solid var(--border-default);
+      border-radius: 2em;
+      padding: 1px 8px;
+    }
 
-        #wrongOverlay {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(4, 6, 14, 0.9); z-index: 9999; justify-content: center; align-items: center; flex-direction: column; text-align: center;
-        }
-        .alert-text { color: #ff2a5f; font-size: 26px; font-weight: bold; margin-bottom: 14px; text-shadow: 0 0 10px #ff2a5f; }
-        #wrongOverlay img { max-width: 85%; max-height: 65vh; border-radius: 10px; border: 3px solid #ff2a5f; }
-    </style>
+    .repo-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background-color: var(--bg-btn);
+      border: 1px solid var(--border-default);
+      border-radius: 6px;
+      padding: 5px 12px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-primary);
+      height: 28px;
+    }
+
+    .btn:hover {
+      background-color: var(--bg-btn-hover);
+      border-color: #8b949e;
+    }
+
+    .btn-group {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .btn-group .btn:first-child {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    .btn-group .btn:last-child {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+      border-left: none;
+      padding: 5px 8px;
+    }
+
+    .counter-pill {
+      background-color: rgba(110, 118, 129, 0.4);
+      border-radius: 2em;
+      padding: 0 6px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .btn-green {
+      background-color: var(--bg-green);
+      border-color: rgba(240, 246, 252, 0.1);
+      color: #ffffff;
+      font-weight: 600;
+      height: 32px;
+      font-size: 13px;
+    }
+
+    .btn-green:hover {
+      background-color: var(--bg-green-hover);
+      border-color: rgba(240, 246, 252, 0.1);
+    }
+
+    .btn-md {
+      height: 32px;
+      font-size: 13px;
+    }
+
+    /* Two-column layout */
+    .repo-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 296px;
+      gap: 24px;
+    }
+
+    @media (max-width: 900px) {
+      .repo-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* File Controls Bar */
+    .file-controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    .controls-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .meta-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      color: var(--text-secondary);
+      font-size: 13px;
+    }
+
+    .meta-link strong {
+      color: var(--text-primary);
+    }
+
+    .meta-link:hover {
+      color: var(--text-link);
+    }
+
+    .controls-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .goto-file-input {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background-color: var(--bg-canvas);
+      border: 1px solid var(--border-default);
+      border-radius: 6px;
+      height: 32px;
+      padding: 0 10px;
+      color: var(--text-secondary);
+    }
+
+    .goto-file-input:focus-within {
+      border-color: var(--text-link);
+      outline: 1px solid var(--text-link);
+    }
+
+    .goto-file-input input {
+      background: transparent;
+      border: none;
+      outline: none;
+      color: var(--text-primary);
+      font-size: 13px;
+      width: 120px;
+    }
+
+    /* File Table Box */
+    .file-box {
+      border: 1px solid var(--border-default);
+      border-radius: 6px;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+
+    .commit-header {
+      background-color: var(--bg-subtle);
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border-default);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 13px;
+    }
+
+    .commit-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .commit-author {
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .commit-msg {
+      color: var(--text-secondary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .commit-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--text-secondary);
+      white-space: nowrap;
+      font-size: 12px;
+    }
+
+    .commit-hash {
+      font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, monospace;
+    }
+
+    .file-row {
+      display: grid;
+      grid-template-columns: minmax(180px, 1.2fr) minmax(180px, 1.8fr) 110px;
+      align-items: center;
+      padding: 8px 16px;
+      border-bottom: 1px solid var(--border-muted);
+      font-size: 14px;
+    }
+
+    .file-row:last-child {
+      border-bottom: none;
+    }
+
+    .file-row:hover {
+      background-color: var(--bg-subtle);
+    }
+
+    .file-name-cell {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .file-name-cell svg {
+      color: var(--text-secondary);
+      flex-shrink: 0;
+    }
+
+    .file-name-cell a:hover {
+      color: var(--text-link);
+      text-decoration: underline;
+    }
+
+    .file-msg-cell {
+      color: var(--text-secondary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      padding-right: 12px;
+    }
+
+    .file-time-cell {
+      text-align: right;
+      color: var(--text-secondary);
+      font-size: 13px;
+    }
+
+    /* README Box */
+    .readme-box {
+      border: 1px solid var(--border-default);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .readme-header {
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      border-bottom: 1px solid var(--border-default);
+      background-color: var(--bg-canvas);
+    }
+
+    .readme-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 4px;
+      font-weight: 600;
+      font-size: 14px;
+      border-bottom: 2px solid var(--accent-orange);
+    }
+
+    .readme-body {
+      padding: 36px 24px;
+      text-align: center;
+    }
+
+    .readme-body h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin: 12px 0 4px 0;
+    }
+
+    .readme-body p {
+      color: var(--text-secondary);
+      font-size: 14px;
+      margin-bottom: 16px;
+    }
+
+    /* Sidebar */
+    .sidebar-section {
+      padding-bottom: 16px;
+      margin-bottom: 16px;
+      border-bottom: 1px solid var(--border-muted);
+    }
+
+    .sidebar-section:last-child {
+      border-bottom: none;
+    }
+
+    .sidebar-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .about-empty {
+      font-style: italic;
+      color: var(--text-secondary);
+      margin-bottom: 14px;
+      font-size: 14px;
+    }
+
+    .sidebar-stats {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+
+    .sidebar-stats li {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sidebar-stats strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .sidebar-muted-text {
+      color: var(--text-secondary);
+      font-size: 12px;
+      margin-bottom: 6px;
+    }
+
+    .sidebar-link {
+      color: var(--text-link);
+      font-size: 12px;
+    }
+
+    .sidebar-link:hover {
+      text-decoration: underline;
+    }
+
+    .deploy-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+    }
+
+    .deploy-item strong {
+      font-weight: 600;
+    }
+
+    .deploy-item span {
+      color: var(--text-secondary);
+      font-size: 12px;
+    }
+
+    /* Dropdown / Modal */
+    .dropdown-wrapper {
+      position: relative;
+      display: inline-block;
+    }
+
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: calc(100% + 6px);
+      width: 320px;
+      background-color: var(--bg-subtle);
+      border: 1px solid var(--border-default);
+      border-radius: 6px;
+      padding: 16px;
+      box-shadow: 0 8px 24px rgba(1, 4, 9, 0.85);
+      z-index: 50;
+    }
+
+    .dropdown-menu.show {
+      display: block;
+    }
+
+    .clone-input-group {
+      display: flex;
+      margin-top: 8px;
+      border: 1px solid var(--border-default);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .clone-input-group input {
+      flex: 1;
+      background: var(--bg-canvas);
+      border: none;
+      color: var(--text-primary);
+      padding: 6px 8px;
+      font-size: 12px;
+      font-family: monospace;
+    }
+
+    .clone-input-group button {
+      background: var(--bg-btn);
+      padding: 0 10px;
+      border-left: 1px solid var(--border-default);
+      font-size: 12px;
+    }
+
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(1, 4, 9, 0.75);
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      padding: 16px;
+    }
+
+    .modal-backdrop.show {
+      display: flex;
+    }
+
+    .modal-card {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-default);
+      border-radius: 8px;
+      width: 100%;
+      max-width: 600px;
+      overflow: hidden;
+    }
+
+    .modal-head {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border-default);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 600;
+    }
+
+    .modal-content {
+      padding: 16px;
+      font-family: ui-monospace, SFMono-Regular, monospace;
+      font-size: 13px;
+      background: var(--bg-canvas);
+      white-space: pre-wrap;
+      color: #c9d1d9;
+      max-height: 360px;
+      overflow-y: auto;
+    }
+  </style>
 </head>
 <body>
 
-    <div class="game-hud">
-        <span class="hud-badge">▶ PLAYER: UYNN</span>
-        <span class="hud-score" id="scoreBoard">SCORE: 0 / 5</span>
+  <!-- Top Header -->
+  <header class="gh-header">
+    <div class="gh-header-top">
+      <div class="gh-header-left">
+        <button class="icon-btn" title="Mở menu">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M1 2.75A.75.75 0 0 1 1.75 2h12.5a.75.75 0 0 1 0 1.5H1.75A.75.75 0 0 1 1 2.75Zm0 5A.75.75 0 0 1 1.75 7h12.5a.75.75 0 0 1 0 1.5H1.75A.75.75 0 0 1 1 7.75ZM1.75 12h12.5a.75.75 0 0 1 0 1.5H1.75a.75.75 0 0 1 0-1.5Z"/>
+          </svg>
+        </button>
+
+        <a href="#" class="gh-logo" aria-label="Trang chủ">
+          <svg height="32" viewBox="0 0 16 16" width="32" fill="currentColor">
+            <path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"/>
+          </svg>
+        </a>
+
+        <nav class="breadcrumb">
+          <a href="#">anhtuan8882-ctrl</a>
+          <span style="color: var(--text-secondary)">/</span>
+          <a href="#" class="repo-name">
+            tuniuuyin
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor" style="color: var(--text-secondary)">
+              <path d="m4.427 7.427 3.396 3.396a.25.25 0 0 0 .354 0l3.396-3.396A.25.25 0 0 0 11.396 7H4.604a.25.25 0 0 0-.177.427Z"/>
+            </svg>
+          </a>
+        </nav>
+      </div>
+
+      <div class="gh-header-right">
+        <div class="search-box">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M10.68 11.74a6 6 0 0 1-7.922-8.982 6 6 0 0 1 8.982 7.922l3.04 3.04a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215ZM11.5 7a4.499 4.499 0 1 0-8.997 0A4.499 4.499 0 0 0 11.5 7Z"/>
+          </svg>
+          <input type="text" placeholder="Nhập / để tìm kiếm" id="globalSearch" />
+          <span class="kbd-slash">/</span>
+        </div>
+
+        <button class="btn-split" title="Copilot">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M7.998 15.035c-4.562 0-7.873-2.914-7.998-3.749V9.338c.085-.628.677-1.686 1.588-2.065.013-.07.024-.143.036-.218.029-.183.06-.384.126-.612-.201-.508-.254-1.084-.254-1.656 0-.87.128-1.769.693-2.484.579-.733 1.494-1.124 2.724-1.261 1.206-.134 2.262.034 2.944.765.05.053.096.108.139.165.044-.057.094-.112.143-.165.682-.731 1.738-.899 2.944-.765 1.23.137 2.145.528 2.724 1.261.566.715.693 1.614.693 2.484 0 .572-.053 1.148-.254 1.656.066.228.098.429.126.612.012.076.024.148.037.218.924.385 1.522 1.471 1.591 2.095v1.872c0 .766-3.351 3.795-8.002 3.795Zm0-1.485c2.28 0 4.584-1.11 5.002-1.433V7.862l-.023-.116c-.49.21-1.075.291-1.727.291-1.146 0-2.059-.327-2.71-.991A3.222 3.222 0 0 1 8 6.303a3.24 3.24 0 0 1-.544.743c-.65.664-1.563.991-2.71.991-.652 0-1.236-.081-1.727-.291l-.023.116v4.255c.419.323 2.722 1.433 5.002 1.433Z"/>
+          </svg>
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor">
+            <path d="m4.427 7.427 3.396 3.396a.25.25 0 0 0 .354 0l3.396-3.396A.25.25 0 0 0 11.396 7H4.604a.25.25 0 0 0-.177.427Z"/>
+          </svg>
+        </button>
+
+        <div class="header-divider"></div>
+
+        <button class="btn-split" title="Tạo mới">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M7.75 2a.75.75 0 0 1 .75.75V7h4.25a.75.75 0 0 1 0 1.5H8.5v4.25a.75.75 0 0 1-1.5 0V8.5H2.75a.75.75 0 0 1 0-1.5H7V2.75A.75.75 0 0 1 7.75 2Z"/>
+          </svg>
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor">
+            <path d="m4.427 7.427 3.396 3.396a.25.25 0 0 0 .354 0l3.396-3.396A.25.25 0 0 0 11.396 7H4.604a.25.25 0 0 0-.177.427Z"/>
+          </svg>
+        </button>
+
+        <button class="icon-btn" title="Vấn đề">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"/><path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0Z"/>
+          </svg>
+        </button>
+
+        <button class="icon-btn" title="Yêu cầu kéo">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M1.5 3.25a2.25 2.25 0 1 1 3 2.122v5.256a2.251 2.251 0 1 1-1.5 0V5.372A2.25 2.25 0 0 1 1.5 3.25Zm5.677-.177L9.573.677A.25.25 0 0 1 10 .854V2.5h1A2.5 2.5 0 0 1 13.5 5v5.628a2.251 2.251 0 1 1-1.5 0V5a1 1 0 0 0-1-1h-1v1.646a.25.25 0 0 1-.427.177L7.177 3.427a.25.25 0 0 1 0-.354ZM3.75 2.5a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Zm0 9.5a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Zm8.25.75a.75.75 0 1 0 1.5 0 .75.75 0 0 0-1.5 0Z"/>
+          </svg>
+        </button>
+
+        <button class="icon-btn" title="Hộp thư đến">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M2.8 2.06A1.75 1.75 0 0 1 4.41 1h7.18c.7 0 1.333.417 1.61 1.06l2.74 6.395c.04.093.06.194.06.295v4.5A1.75 1.75 0 0 1 14.25 15H1.75A1.75 1.75 0 0 1 0 13.25v-4.5c0-.101.02-.202.06-.295Zm1.61.44a.25.25 0 0 0-.23.152L1.887 8H4.75a.75.75 0 0 1 .6.3L6.625 10h2.75l1.275-1.7a.75.75 0 0 1 .6-.3h2.863L11.82 2.652a.25.25 0 0 0-.23-.152Zm10.09 7h-2.875l-1.275 1.7a.75.75 0 0 1-.6.3h-3.5a.75.75 0 0 1-.6-.3L4.375 9.5H1.5v3.75c0 .138.112.25.25.25h12.5a.25.25 0 0 0 .25-.25Z"/>
+          </svg>
+        </button>
+
+        <div class="avatar" title="anhtuan8882-ctrl">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#ffffff">
+            <rect x="6" y="7" width="3" height="7" rx="1"/>
+            <rect x="15" y="7" width="3" height="7" rx="1"/>
+          </svg>
+        </div>
+      </div>
     </div>
 
-    <h1>5 câu hỏi về sở thích của anh Tún</h1>
+    <!-- Navigation Tabs -->
+    <nav class="gh-nav" id="repoTabs">
+      <a href="#" class="nav-tab active" data-tab="code">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+          <path d="m11.28 3.22 4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734L13.94 8l-3.72-3.72a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215Zm-6.56 0a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042L2.06 8l3.72 3.72a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215L.47 8.53a.75.75 0 0 1 0-1.06Z"/>
+        </svg>
+        Mã số
+      </a>
+      <a href="#" class="nav-tab" data-tab="issues">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+          <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"/><path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0Z"/>
+        </svg>
+        Vấn đề
+      </a>
+      <a href="#" class="nav-tab" data-tab="pulls">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+          <path d="M1.5 3.25a2.25 2.25 0 1 1 3 2.122v5.256a2.251 2.251 0 1 1-1.5 0V5.372A2.25 2.25 0 0 1 1.5 3.25Zm5.677-.177L9.573.677A.25.25 0 0 1 10 .854V2.5h1A2.5 2.5 0 0 1 13.5 5v5.628a2.251 2.251 0 1 1-1.5 0V5a1 1 0 0 0-1-1h-1v1.646a.25.25 0 0 1-.427.177L7.177 3.427a.25.25 0 0 1 0-.354ZM3.75 2.5a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Zm0 9.5a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Zm8.25.75a.75.75 0 1 0 1.5 0 .75.75 0 0 0-1.5 0Z"/>
+        </svg>
+        Yêu cầu kéo
+      </a>
+      <a href="#" class="nav-tab" data-tab="agents">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+          <path d="M8 2.5a5.487 5.487 0 0 0-4.131 1.869l1.204 1.204A.25.25 0 0 1 4.896 6H1.25A.25.25 0 0 1 1 5.75V2.104a.25.25 0 0 1 .427-.177l1.38 1.38A7.002 7.002 0 0 1 14.95 7.16a.75.75 0 0 1-1.49.178A5.5 5.5 0 0 0 8 2.5Z"/>
+        </svg>
+        Đại lý
+      </a>
+      <a href="#" class="nav-tab" data-tab="actions">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+          <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0Zm4.879-2.773 4.264 2.559a.25.25 0 0 1 0 .428l-4.264 2.559A.25.25 0 0 1 6 10.559V5.442a.25.25 0 0 1 .379-.215Z"/>
+        </svg>
+        Hành động
+      </a>
+      <a href="#" class="nav-tab" data-tab="projects">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+          <path d="M1.75 0h12.5C15.216 0 16 .784 16 1.75v12.5A1.75 1.75 0 0 1 14.25 16H1.75A1.75 1.75 0 0 1 0 14.25V1.75C0 .784.784 0 1.75 0ZM1.5 1.75v12.5c0 .138.112.25.25.25h12.5a.25.25 0 0 0 .25-.25V1.75a.25.25 0 0 0-.25-.25H1.75a.25.25 0 0 0-.25.25ZM11.75 3a.75.75 0 0 1 .75.75v7.5a.75.75 0 0 1-1.5 0v-7.5a.75.75 0 0 1 .75-.75Zm-8.25.75a.75.75 0 0 1 1.5 0v5.5a.75.75 0 0 1-1.5 0ZM8 3a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5A.75.75 0 0 1 8 3Z"/>
+        </svg>
+        Dự án
+      </a>
+      <a href="#" class="nav-tab" data-tab="wiki">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+          <path d="M0 1.75A.75.75 0 0 1 .75 1h4.253c1.227 0 2.317.59 3 1.501A3.743 3.743 0 0 1 11.006 1h4.245a.75.75 0 0 1 .75.75v10.5a.75.75 0 0 1-.75.75h-4.507a2.25 2.25 0 0 0-1.591.659l-.622.621a.75.75 0 0 1-1.06 0l-.622-.621A2.25 2.25 0 0 0 5.258 13H.75a.75.75 0 0 1-.75-.75Zm7.251 10.324.004-5.073-.002-2.253A2.25 2.25 0 0 0 5.003 2.5H1.5v9h3.757a3.75 3.75 0 0 1 1.994.574ZM8.755 4.75l-.004 7.322a3.752 3.752 0 0 1 1.992-.572H14.5v-9h-3.495a2.25 2.25 0 0 0-2.25 2.25Z"/>
+        </svg>
+        Wiki
+      </a>
+      <a href="#" class="nav-tab" data-tab="security">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+          <path d="M7.467.133a1.748 1.748 0 0 1 1.066 0l5.25 1.68A1.75 1.75 0 0 1 15 3.48V7c0 1.566-.32 3.182-1.303 4.682-.983 1.498-2.585 2.813-5.032 3.855a1.697 1.697 0 0 1-1.33 0c-2.447-1.042-4.049-2.357-5.032-3.855C1.32 10.182 1 8.566 1 7V3.48a1.75 1.75 0 0 1 1.217-1.667Zm.61 1.429a.25.25 0 0 0-.153 0l-5.25 1.68a.25.25 0 0 0-.174.238V7c0 1.358.275 2.666 1.057 3.86.784 1.194 2.121 2.34 4.366 3.297a.196.196 0 0 0 .154 0c2.245-.956 3.582-2.104 4.366-3.298C13.225 9.666 13.5 8.36 13.5 7V3.48a.251.251 0 0 0-.174-.237l-5.25-1.68ZM8.75 4.75v3a.75.75 0 0 1-1.5 0v-3a.75.75 0 0 1 1.5 0ZM9 10.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"/>
+        </svg>
+        An ninh và chất lượng
+      </a>
+      <a href="#" class="nav-tab" data-tab="insights">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+          <path d="M1.5 1.75V13.5h13.75a.75.75 0 0 1 0 1.5H.75a.75.75 0 0 1-.75-.75V1.75a.75.75 0 0 1 1.5 0Zm14.28 2.53-5.25 5.25a.75.75 0 0 1-1.06 0L7 7.06 4.28 9.78a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042l3.25-3.25a.75.75 0 0 1 1.06 0L10 7.94l4.72-4.72a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042Z"/>
+        </svg>
+        Thông tin chi tiết
+      </a>
+      <a href="#" class="nav-tab" data-tab="settings">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+          <path d="M8 0a8.2 8.2 0 0 1 .701.031C9.444.095 9.99.645 10.16 1.29l.288 1.107c.018.066.079.158.212.224.231.114.454.243.668.386.123.082.233.09.299.071l1.103-.303c.644-.176 1.392.021 1.82.63.27.385.506.792.704 1.218.315.675.111 1.422-.364 1.891l-.814.806c-.049.048-.098.147-.088.294.016.257.016.515 0 .772-.01.147.038.246.088.294l.814.806c.475.469.679 1.216.364 1.891a7.977 7.977 0 0 1-.704 1.217c-.428.61-1.176.807-1.82.63l-1.102-.302c-.067-.019-.177-.011-.3.071a5.909 5.909 0 0 1-.668.386c-.133.066-.194.158-.211.224l-.29 1.106c-.168.646-.715 1.196-1.458 1.26a8.006 8.006 0 0 1-1.402 0c-.743-.064-1.289-.614-1.458-1.26l-.289-1.106c-.018-.066-.079-.158-.212-.224a5.738 5.738 0 0 1-.668-.386c-.123-.082-.233-.09-.299-.071l-1.103.303c-.644.176-1.392-.021-1.82-.63a8.12 8.12 0 0 1-.704-1.218c-.315-.675-.111-1.422.363-1.891l.815-.806c.05-.048.098-.147.088-.294a6.214 6.214 0 0 1 0-.772c.01-.147-.038-.246-.088-.294l-.815-.806C.635 6.045.431 5.298.746 4.623a7.92 7.92 0 0 1 .704-1.217c.428-.61 1.176-.807 1.82-.63l1.102.302c.067.019.177.011.3-.071.214-.143.437-.272.668-.386.133-.066.194-.158.211-.224l.29-1.106C6.009.645 6.556.095 7.299.03 7.53.01 7.764 0 8 0Zm-.571 1.525c-.036.003-.108.036-.137.146l-.289 1.105c-.147.561-.549.967-.998 1.189-.173.086-.34.183-.5.29-.417.278-.97.423-1.529.27l-1.103-.303c-.109-.03-.175.016-.195.045-.22.312-.412.644-.573.99-.014.031-.021.11.059.19l.815.806c.411.406.562.957.53 1.456a4.709 4.709 0 0 0 0 .582c.032.499-.119 1.05-.53 1.456l-.815.806c-.081.08-.073.159-.059.19.162.346.353.677.573.989.02.03.085.076.195.046l1.102-.303c.56-.153 1.113-.008 1.53.27.161.107.328.204.501.29.447.222.85.629.997 1.189l.289 1.105c.029.109.101.143.137.146a6.6 6.6 0 0 0 1.142 0c.036-.003.108-.036.137-.146l.289-1.105c.147-.561.549-.967.998-1.189.173-.086.34-.183.5-.29.417-.278.97-.423 1.529-.27l1.103.303c.109.029.175-.016.195-.045.22-.313.411-.644.573-.99.014-.031.021-.11-.059-.19l-.815-.806c-.411-.406-.562-.957-.53-1.456a4.709 4.709 0 0 0 0-.582c-.032-.499.119-1.05.53-1.456l.815-.806c.081-.08.073-.159.059-.19a6.464 6.464 0 0 0-.573-.989c-.02-.03-.085-.076-.195-.046l-1.102.303c-.56.153-1.113.008-1.53-.27a4.44 4.44 0 0 0-.501-.29c-.447-.222-.85-.629-.997-1.189l-.289-1.105c-.029-.11-.101-.143-.137-.146a6.6 6.6 0 0 0-1.142 0ZM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM9.5 8a1.5 1.5 0 1 0-3.001.001A1.5 1.5 0 0 0 9.5 8Z"/>
+        </svg>
+        Cài đặt
+      </a>
+    </nav>
+  </header>
 
-    <div class="avatar-frame">
-        <img class="main-img" src="tun.jpg.jpg" alt="Ảnh anh Tún">
+  <!-- Main Content -->
+  <main class="container">
+    <!-- Repo Header -->
+    <div class="repo-title-bar">
+      <div class="repo-title-left">
+        <div class="avatar avatar-lg">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#ffffff">
+            <rect x="6" y="7" width="3" height="7" rx="1"/>
+            <rect x="15" y="7" width="3" height="7" rx="1"/>
+          </svg>
+        </div>
+        <h1>tuniuuyin</h1>
+        <span class="badge-public">Công cộng</span>
+      </div>
+
+      <div class="repo-actions">
+        <button class="btn" id="pinBtn">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" style="color: var(--text-secondary)">
+            <path d="M4.456.734a1.75 1.75 0 0 1 2.826.504l.613 1.327a3.081 3.081 0 0 0 2.084 1.707l2.454.584c1.332.317 1.8 1.972.832 2.94L11.06 10l3.72 3.72a.75.75 0 1 1-1.06 1.06L10 11.06l-2.204 2.205c-.968.968-2.623.5-2.94-.832l-.584-2.454a3.081 3.081 0 0 0-1.707-2.084l-1.327-.613a1.75 1.75 0 0 1-.504-2.826Z"/>
+          </svg>
+          <span>Ghim</span>
+        </button>
+
+        <div class="btn-group">
+          <button class="btn" id="watchBtn">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" style="color: var(--text-secondary)">
+              <path d="M8 2c1.981 0 3.671.992 4.933 2.078 1.27 1.091 2.187 2.345 2.637 3.023a1.62 1.62 0 0 1 0 1.798c-.45.678-1.367 1.932-2.637 3.023C11.67 13.008 9.981 14 8 14c-1.981 0-3.671-.992-4.933-2.078C1.797 10.83.88 9.576.43 8.898a1.62 1.62 0 0 1 0-1.798c.45-.677 1.367-1.931 2.637-3.022C4.33 2.992 6.019 2 8 2ZM1.679 7.932a.12.12 0 0 0 0 .136c.411.622 1.241 1.75 2.366 2.717C5.176 11.758 6.527 12.5 8 12.5c1.473 0 2.825-.742 3.955-1.715 1.124-.967 1.954-2.096 2.366-2.717a.12.12 0 0 0 0-.136c-.412-.621-1.242-1.75-2.366-2.717C10.824 4.242 9.473 3.5 8 3.5c-1.473 0-2.825.742-3.955 1.715-1.124.967-1.954 2.096-2.366 2.717ZM8 10a2 2 0 1 1-.001-3.999A2 2 0 0 1 8 10Z"/>
+            </svg>
+            <span>Đồng hồ</span>
+            <span class="counter-pill" id="watchCount">0</span>
+          </button>
+          <button class="btn">
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor">
+              <path d="m4.427 7.427 3.396 3.396a.25.25 0 0 0 .354 0l3.396-3.396A.25.25 0 0 0 11.396 7H4.604a.25.25 0 0 0-.177.427Z"/>
+            </svg>
+          </button>
+        </div>
+
+        <div class="btn-group">
+          <button class="btn" id="forkBtn">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" style="color: var(--text-secondary)">
+              <path d="M5 5.372v.878c0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75v-.878a2.25 2.25 0 1 1 1.5 0v.878a2.25 2.25 0 0 1-2.25 2.25h-1.5v2.128a2.251 2.251 0 1 1-1.5 0V8.5h-1.5A2.25 2.25 0 0 1 3.5 6.25v-.878a2.25 2.25 0 1 1 1.5 0ZM5 3.25a.75.75 0 1 0-1.5 0 .75.75 0 0 0 1.5 0Zm6.75.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm-3 8.75a.75.75 0 1 0-1.5 0 .75.75 0 0 0 1.5 0Z"/>
+            </svg>
+            <span>Cái nĩa</span>
+            <span class="counter-pill" id="forkCount">0</span>
+          </button>
+          <button class="btn">
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor">
+              <path d="m4.427 7.427 3.396 3.396a.25.25 0 0 0 .354 0l3.396-3.396A.25.25 0 0 0 11.396 7H4.604a.25.25 0 0 0-.177.427Z"/>
+            </svg>
+          </button>
+        </div>
+
+        <div class="btn-group">
+          <button class="btn" id="starBtn">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" style="color: var(--text-secondary)" id="starIcon">
+              <path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.751.751 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Zm0 2.445L6.615 5.5a.75.75 0 0 1-.564.41l-3.097.45 2.24 2.184a.75.75 0 0 1 .216.664l-.528 3.084 2.769-1.456a.75.75 0 0 1 .698 0l2.77 1.456-.53-3.084a.75.75 0 0 1 .216-.664l2.24-2.183-3.096-.45a.75.75 0 0 1-.564-.41L8 2.694Z"/>
+            </svg>
+            <span id="starLabel">Ngôi sao</span>
+            <span class="counter-pill" id="starCount">0</span>
+          </button>
+          <button class="btn">
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor">
+              <path d="m4.427 7.427 3.396 3.396a.25.25 0 0 0 .354 0l3.396-3.396A.25.25 0 0 0 11.396 7H4.604a.25.25 0 0 0-.177.427Z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
     </div>
 
-    <div class="quiz-container">
-        <div class="question-card-border">
-            <div class="question-card">
-                <span class="quest-label">MISSION 01</span>
-                <p class="question-title">Câu 1: Món ăn anh Tún thích nhất là gì?</p>
-                <div class="options">
-                    <button class="opt-btn" onclick="kiemTra(this, true)">A. Lạp xưởng nướng đá</button>
-                    <button class="opt-btn" onclick="kiemTra(this, false)">B. Xúc xích ponie</button>
+    <!-- Two Column Grid -->
+    <div class="repo-layout">
+      <!-- Left Column -->
+      <div>
+        <div class="file-controls">
+          <div class="controls-left">
+            <button class="btn btn-md">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" style="color: var(--text-secondary)">
+                <path d="M9.5 3.25a2.25 2.25 0 1 1 3 2.122V6A2.5 2.5 0 0 1 10 8.5H6a1 1 0 0 0-1 1v1.128a2.251 2.251 0 1 1-1.5 0V5.372a2.25 2.25 0 1 1 1.5 0v1.836A2.493 2.493 0 0 1 6 7h4a1 1 0 0 0 1-1v-.628A2.25 2.25 0 0 1 9.5 3.25Zm-6 0a.75.75 0 1 0 1.5 0 .75.75 0 0 0-1.5 0Zm8.25-.75a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5ZM4.25 12a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Z"/>
+              </svg>
+              <span>chủ yếu</span>
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor">
+                <path d="m4.427 7.427 3.396 3.396a.25.25 0 0 0 .354 0l3.396-3.396A.25.25 0 0 0 11.396 7H4.604a.25.25 0 0 0-.177.427Z"/>
+              </svg>
+            </button>
+
+            <a href="#" class="meta-link">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                <path d="M9.5 3.25a2.25 2.25 0 1 1 3 2.122V6A2.5 2.5 0 0 1 10 8.5H6a1 1 0 0 0-1 1v1.128a2.251 2.251 0 1 1-1.5 0V5.372a2.25 2.25 0 1 1 1.5 0v1.836A2.493 2.493 0 0 1 6 7h4a1 1 0 0 0 1-1v-.628A2.25 2.25 0 0 1 9.5 3.25Z"/>
+              </svg>
+              <strong>1</strong> Chi nhánh
+            </a>
+
+            <a href="#" class="meta-link">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                <path d="M1 7.775V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 0 1 0 2.474l-5.026 5.026a1.75 1.75 0 0 1-2.474 0l-6.25-6.25A1.752 1.752 0 0 1 1 7.775Zm1.5 0c0 .066.026.13.073.177l6.25 6.25a.25.25 0 0 0 .354 0l5.025-5.025a.25.25 0 0 0 0-.354l-6.25-6.25a.25.25 0 0 0-.177-.073H2.75a.25.25 0 0 0-.25.25ZM6 5a1 1 0 1 1 0 2 1 1 0 0 1 0-2Z"/>
+              </svg>
+              <strong>0</strong> Thẻ
+            </a>
+          </div>
+
+          <div class="controls-right">
+            <div class="goto-file-input">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
+                <path d="M10.68 11.74a6 6 0 0 1-7.922-8.982 6 6 0 0 1 8.982 7.922l3.04 3.04a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215ZM11.5 7a4.499 4.499 0 1 0-8.997 0A4.499 4.499 0 0 0 11.5 7Z"/>
+              </svg>
+              <input type="text" id="fileFilterInput" placeholder="Đi đến tệp" />
+              <span class="kbd-slash">T</span>
+            </div>
+
+            <button class="btn btn-md">
+              <span>Thêm tệp</span>
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor">
+                <path d="m4.427 7.427 3.396 3.396a.25.25 0 0 0 .354 0l3.396-3.396A.25.25 0 0 0 11.396 7H4.604a.25.25 0 0 0-.177.427Z"/>
+              </svg>
+            </button>
+
+            <div class="dropdown-wrapper">
+              <button class="btn btn-green" id="codeBtn">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                  <path d="m11.28 3.22 4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734L13.94 8l-3.72-3.72a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215Zm-6.56 0a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042L2.06 8l3.72 3.72a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215L.47 8.53a.75.75 0 0 1 0-1.06Z"/>
+                </svg>
+                <span>Mã số</span>
+                <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor">
+                  <path d="m4.427 7.427 3.396 3.396a.25.25 0 0 0 .354 0l3.396-3.396A.25.25 0 0 0 11.396 7H4.604a.25.25 0 0 0-.177.427Z"/>
+                </svg>
+              </button>
+
+              <div class="dropdown-menu" id="codeDropdown">
+                <div style="font-weight: 600; margin-bottom: 4px;">Sao chép URL (HTTPS)</div>
+                <div class="clone-input-group">
+                  <input type="text" readonly id="cloneUrlInput" value="https://github.com/anhtuan8882-ctrl/tuniuuyin.git" />
+                  <button id="copyCloneBtn">Chép</button>
                 </div>
+              </div>
             </div>
+          </div>
         </div>
 
-        <div class="question-card-border">
-            <div class="question-card">
-                <span class="quest-label">MISSION 02</span>
-                <p class="question-title">Câu 2: Lúc ở vứi Uyin anh Tún thích làm gì nhất?</p>
-                <div class="options">
-                    <button class="opt-btn" onclick="kiemTra(this, false)">A. Ôm ngụ</button>
-                    <button class="opt-btn" onclick="kiemTra(this, true)">B. Rủ chơi game</button>
-                </div>
+        <!-- File List Box -->
+        <div class="file-box">
+          <div class="commit-header">
+            <div class="commit-left">
+              <div class="avatar avatar-sm">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="#ffffff">
+                  <rect x="6" y="7" width="3" height="7" rx="1"/>
+                  <rect x="15" y="7" width="3" height="7" rx="1"/>
+                </svg>
+              </div>
+              <span class="commit-author">anhtuan8882-ctrl</span>
+              <span class="commit-msg">Thêm tệp qua chức năng tải lên</span>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="var(--accent-green)" style="flex-shrink: 0;">
+                <path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"/>
+              </svg>
             </div>
+            <div class="commit-right">
+              <span class="commit-hash">669138a · 11 giờ trước</span>
+              <span style="display: inline-flex; align-items: center; gap: 4px; color: var(--text-primary); font-weight: 600;">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" style="color: var(--text-secondary)">
+                  <path d="M1.643 3.143.427 1.927A.25.25 0 0 0 0 2.104V5.75c0 .138.112.25.25.25h3.646a.25.25 0 0 0 .177-.427L2.715 4.215a6.5 6.5 0 1 1-1.18 4.458.75.75 0 1 0-1.493.154 8.001 8.001 0 1 0 1.6-5.684ZM7.75 4a.75.75 0 0 1 .75.75v2.992l2.028.812a.75.75 0 0 1-.557 1.392l-2.5-1A.751.751 0 0 1 7 8.25v-3.5A.75.75 0 0 1 7.75 4Z"/>
+                </svg>
+                1 Cam kết
+              </span>
+            </div>
+          </div>
+
+          <div id="fileRowsContainer">
+            <div class="file-row" data-filename="index.html">
+              <div class="file-name-cell">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                  <path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 9 4.25V1.5Zm6.75.062V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"/>
+                </svg>
+                <a href="#" class="file-link" data-file="index.html">index.html</a>
+              </div>
+              <div class="file-msg-cell">Thêm tệp qua chức năng tải lên</div>
+              <div class="file-time-cell">11 giờ trước</div>
+            </div>
+
+            <div class="file-row" data-filename="thefuck.jpg.jfif">
+              <div class="file-name-cell">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                  <path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 9 4.25V1.5Zm6.75.062V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"/>
+                </svg>
+                <a href="#" class="file-link" data-file="thefuck.jpg.jfif">thefuck.jpg.jfif</a>
+              </div>
+              <div class="file-msg-cell">Thêm tệp qua chức năng tải lên</div>
+              <div class="file-time-cell">11 giờ trước</div>
+            </div>
+
+            <div class="file-row" data-filename="tun.jpg.jpg">
+              <div class="file-name-cell">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                  <path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 9 4.25V1.5Zm6.75.062V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"/>
+                </svg>
+                <a href="#" class="file-link" data-file="tun.jpg.jpg">tun.jpg.jpg</a>
+              </div>
+              <div class="file-msg-cell">Thêm tệp qua chức năng tải lên</div>
+              <div class="file-time-cell">11 giờ trước</div>
+            </div>
+          </div>
         </div>
 
-        <div class="question-card-border">
-            <div class="question-card">
-                <span class="quest-label">MISSION 03</span>
-                <p class="question-title">Câu 3: Cung hoàng đạo của anh Tún là?</p>
-                <div class="options">
-                    <button class="opt-btn" onclick="kiemTra(this, true)">A. Song Tử
-                    <button class="opt-btn" onclick="kiemTra(this, false)">B. Ma kết</button>
-                </div>
+        <!-- README Box -->
+        <div class="readme-box">
+          <div class="readme-header">
+            <div class="readme-tab">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" style="color: var(--text-secondary)">
+                <path d="M0 1.75A.75.75 0 0 1 .75 1h4.253c1.227 0 2.317.59 3 1.501A3.743 3.743 0 0 1 11.006 1h4.245a.75.75 0 0 1 .75.75v10.5a.75.75 0 0 1-.75.75h-4.507a2.25 2.25 0 0 0-1.591.659l-.622.621a.75.75 0 0 1-1.06 0l-.622-.621A2.25 2.25 0 0 0 5.258 13H.75a.75.75 0 0 1-.75-.75Zm7.251 10.324.004-5.073-.002-2.253A2.25 2.25 0 0 0 5.003 2.5H1.5v9h3.757a3.75 3.75 0 0 1 1.994.574ZM8.755 4.75l-.004 7.322a3.752 3.752 0 0 1 1.992-.572H14.5v-9h-3.495a2.25 2.25 0 0 0-2.25 2.25Z"/>
+              </svg>
+              <span>README</span>
             </div>
+          </div>
+          <div class="readme-body" id="readmeContent">
+            <svg width="24" height="24" viewBox="0 0 16 16" fill="currentColor" style="color: var(--text-secondary)">
+              <path d="M0 1.75A.75.75 0 0 1 .75 1h4.253c1.227 0 2.317.59 3 1.501A3.743 3.743 0 0 1 11.006 1h4.245a.75.75 0 0 1 .75.75v10.5a.75.75 0 0 1-.75.75h-4.507a2.25 2.25 0 0 0-1.591.659l-.622.621a.75.75 0 0 1-1.06 0l-.622-.621A2.25 2.25 0 0 0 5.258 13H.75a.75.75 0 0 1-.75-.75Zm7.251 10.324.004-5.073-.002-2.253A2.25 2.25 0 0 0 5.003 2.5H1.5v9h3.757a3.75 3.75 0 0 1 1.994.574ZM8.755 4.75l-.004 7.322a3.752 3.752 0 0 1 1.992-.572H14.5v-9h-3.495a2.25 2.25 0 0 0-2.25 2.25Z"/>
+            </svg>
+            <h3>Thêm tệp README</h3>
+            <p>Giúp những người quan tâm đến kho lưu trữ này hiểu rõ dự án của bạn.</p>
+            <button class="btn btn-green" id="addReadmeBtn">Thêm README</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Sidebar -->
+      <aside>
+        <div class="sidebar-section">
+          <div class="sidebar-heading">
+            <span>Về</span>
+            <button style="color: var(--text-secondary)" title="Chỉnh sửa thông tin">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                <path d="M8 0a8.2 8.2 0 0 1 .701.031C9.444.095 9.99.645 10.16 1.29l.288 1.107c.018.066.079.158.212.224.231.114.454.243.668.386.123.082.233.09.299.071l1.103-.303c.644-.176 1.392.021 1.82.63.27.385.506.792.704 1.218.315.675.111 1.422-.364 1.891l-.814.806c-.049.048-.098.147-.088.294.016.257.016.515 0 .772-.01.147.038.246.088.294l.814.806c.475.469.679 1.216.364 1.891a7.977 7.977 0 0 1-.704 1.217c-.428.61-1.176.807-1.82.63l-1.102-.302c-.067-.019-.177-.011-.3.071a5.909 5.909 0 0 1-.668.386c-.133.066-.194.158-.211.224l-.29 1.106c-.168.646-.715 1.196-1.458 1.26a8.006 8.006 0 0 1-1.402 0c-.743-.064-1.289-.614-1.458-1.26l-.289-1.106c-.018-.066-.079-.158-.212-.224a5.738 5.738 0 0 1-.668-.386c-.123-.082-.233-.09-.299-.071l-1.103.303c-.644.176-1.392-.021-1.82-.63a8.12 8.12 0 0 1-.704-1.218c-.315-.675-.111-1.422.363-1.891l.815-.806c.05-.048.098-.147.088-.294a6.214 6.214 0 0 1 0-.772c.01-.147-.038-.246-.088-.294l-.815-.806C.635 6.045.431 5.298.746 4.623a7.92 7.92 0 0 1 .704-1.217c.428-.61 1.176-.807 1.82-.63l1.102.302c.067.019.177.011.3-.071.214-.143.437-.272.668-.386.133-.066.194-.158.211-.224l.29-1.106C6.009.645 6.556.095 7.299.03 7.53.01 7.764 0 8 0Zm-.571 1.525c-.036.003-.108.036-.137.146l-.289 1.105c-.147.561-.549.967-.998 1.189-.173.086-.34.183-.5.29-.417.278-.97.423-1.529.27l-1.103-.303c-.109-.03-.175.016-.195.045-.22.312-.412.644-.573.99-.014.031-.021.11.059.19l.815.806c.411.406.562.957.53 1.456a4.709 4.709 0 0 0 0 .582c.032.499-.119 1.05-.53 1.456l-.815.806c-.081.08-.073.159-.059.19.162.346.353.677.573.989.02.03.085.076.195.046l1.102-.303c.56-.153 1.113-.008 1.53.27.161.107.328.204.501.29.447.222.85.629.997 1.189l.289 1.105c.029.109.101.143.137.146a6.6 6.6 0 0 0 1.142 0c.036-.003.108-.036.137-.146l.289-1.105c.147-.561.549-.967.998-1.189.173-.086.34-.183.5-.29.417-.278.97-.423 1.529-.27l1.103.303c.109.029.175-.016.195-.045.22-.313.411-.644.573-.99.014-.031.021-.11-.059-.19l-.815-.806c-.411-.406-.562-.957-.53-1.456a4.709 4.709 0 0 0 0-.582c-.032-.499.119-1.05.53-1.456l.815-.806c.081-.08.073-.159.059-.19a6.464 6.464 0 0 0-.573-.989c-.02-.03-.085-.076-.195-.046l-1.102.303c-.56.153-1.113.008-1.53-.27a4.44 4.44 0 0 0-.501-.29c-.447-.222-.85-.629-.997-1.189l-.289-1.105c-.029-.11-.101-.143-.137-.146a6.6 6.6 0 0 0-1.142 0ZM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM9.5 8a1.5 1.5 0 1 0-3.001.001A1.5 1.5 0 0 0 9.5 8Z"/>
+              </svg>
+            </button>
+          </div>
+          <p class="about-empty">Không có mô tả, trang web hoặc chủ đề nào được cung cấp.</p>
+          <ul class="sidebar-stats">
+            <li>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                <path d="M1.5 1.75V13.5h13.75a.75.75 0 0 1 0 1.5H.75a.75.75 0 0 1-.75-.75V1.75a.75.75 0 0 1 1.5 0Zm14.28 2.53-5.25 5.25a.75.75 0 0 1-1.06 0L7 7.06 4.28 9.78a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042l3.25-3.25a.75.75 0 0 1 1.06 0L10 7.94l4.72-4.72a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042Z"/>
+              </svg>
+              <span>Hoạt động</span>
+            </li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                <path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.751.751 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z"/>
+              </svg>
+              <span><strong id="sidebarStarCount">0</strong> sao</span>
+            </li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                <path d="M8 2c1.981 0 3.671.992 4.933 2.078 1.27 1.091 2.187 2.345 2.637 3.023a1.62 1.62 0 0 1 0 1.798c-.45.678-1.367 1.932-2.637 3.023C11.67 13.008 9.981 14 8 14c-1.981 0-3.671-.992-4.933-2.078C1.797 10.83.88 9.576.43 8.898a1.62 1.62 0 0 1 0-1.798c.45-.677 1.367-1.931 2.637-3.022C4.33 2.992 6.019 2 8 2ZM8 10a2 2 0 1 1-.001-3.999A2 2 0 0 1 8 10Z"/>
+              </svg>
+              <span><strong>0</strong> người đang xem</span>
+            </li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                <path d="M5 5.372v.878c0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75v-.878a2.25 2.25 0 1 1 1.5 0v.878a2.25 2.25 0 0 1-2.25 2.25h-1.5v2.128a2.251 2.251 0 1 1-1.5 0V8.5h-1.5A2.25 2.25 0 0 1 3.5 6.25v-.878a2.25 2.25 0 1 1 1.5 0Z"/>
+              </svg>
+              <span><strong>0</strong> nĩa</span>
+            </li>
+          </ul>
         </div>
 
-        <div class="question-card-border">
-            <div class="question-card">
-                <span class="quest-label">MISSION 04</span>
-                <p class="question-title">Câu 4: Anh Tún thích đi đâu vào cuối tuần?</p>
-                <div class="options">
-                    <button class="opt-btn" onclick="kiemTra(this, false)">A. Ở nhà một mình
-                    <button class="opt-btn" onclick="kiemTra(this, true)">B. Đi lượn phố cùng Uynn</button>
-                </div>
-            </div>
+        <div class="sidebar-section">
+          <div class="sidebar-heading">
+            <span>Phát hành</span>
+          </div>
+          <p class="sidebar-muted-text">Không có thông cáo báo chí nào được công bố.</p>
+          <a href="#" class="sidebar-link">Tạo bản phát hành mới</a>
         </div>
 
-        <div class="question-card-border">
-            <div class="question-card">
-                <span class="quest-label">MISSION 05</span>
-                <p class="question-title">Câu 5: Anh Tún thích chơi game thể loại gì nhất?</p>
-                <div class="options">
-                    <button class="opt-btn" onclick="kiemTra(this, true)">A. Hành động thế giới mở</button>
-                    <button class="opt-btn" onclick="kiemTra(this, false)">B. Sinh tồn thế giới mở</button>
-                </div>
-            </div>
+        <div class="sidebar-section">
+          <div class="sidebar-heading">
+            <span>Triển khai <span class="counter-pill">1</span></span>
+          </div>
+          <div class="deploy-item">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="var(--accent-green)">
+              <path d="M8 16A8 8 0 1 1 8 0a8 8 0 0 1 0 16Zm3.78-9.72a.751.751 0 0 0-.018-1.042.751.751 0 0 0-1.042-.018L6.75 9.19 5.28 7.72a.751.751 0 0 0-1.042.018.751.751 0 0 0-.018 1.042l2 2a.75.75 0 0 0 1.06 0Z"/>
+            </svg>
+            <strong>trang github</strong>
+            <span>11 giờ trước</span>
+          </div>
         </div>
+      </aside>
     </div>
+  </main>
 
-    <!-- VÒNG QUAY MAY MẮN GAMING -->
-    <div class="lucky-wheel-section">
-        <div class="lucky-wheel-container">
-            <div class="wheel-title">✨ Vòng quay may mắn nhận quà từ anh iu ✨</div>
-            <div class="wheel-box">
-                <div class="wheel-pointer"></div>
-                <canvas id="canvasWheel" width="300" height="300"></canvas>
-            </div>
-            <button class="spin-btn" id="spinBtn" onclick="quayVongQuay()">QUAY NGAY (1 LẦN)</button>
-        </div>
+  <!-- File Preview Modal -->
+  <div class="modal-backdrop" id="fileModal">
+    <div class="modal-card">
+      <div class="modal-head">
+        <span id="modalTitle">index.html</span>
+        <button id="closeModalBtn" style="font-size: 18px;">&times;</button>
+      </div>
+      <div class="modal-content" id="modalBody"></div>
     </div>
+  </div>
 
-    <div id="rewardPopup">
-        <div class="reward-card">
-            <div class="reward-title">🎉 QUÀ TẶNG BẤT NGỜ!</div>
-            <div class="reward-desc" id="rewardText">Chúc mừng iu quay trúng...</div>
-            <button class="confirm-reward-btn" id="confirmBtn" onclick="xacNhanThuong()">Xác Nhận</button>
-            <div class="success-text" id="successMsg">✔ Xác nhận thành công!</div>
-        </div>
-    </div>
+  <script>
+    // Filter files in "Đi đến tệp"
+    const fileFilterInput = document.getElementById('fileFilterInput');
+    const fileRows = document.querySelectorAll('.file-row');
 
-    <div id="wrongOverlay">
-        <div class="alert-text">Chọn Sai Rồi Đồ Hâm</div>
-        <img src="thefuck.jpg.jfif" alt="Chọn sai rồi!">
-    </div>
+    fileFilterInput.addEventListener('input', (e) => {
+      const keyword = e.target.value.toLowerCase().trim();
+      fileRows.forEach(row => {
+        const name = row.dataset.filename.toLowerCase();
+        row.style.display = name.includes(keyword) ? 'grid' : 'none';
+      });
+    });
 
-    <script>
-        let boDemThoiGian;
-        let diemSo = 0;
+    // Keyboard shortcuts "/" and "t"
+    document.addEventListener('keydown', (e) => {
+      if (document.activeElement.tagName === 'INPUT') return;
+      if (e.key === '/') {
+        e.preventDefault();
+        document.getElementById('globalSearch').focus();
+      } else if (e.key.toLowerCase() === 't') {
+        e.preventDefault();
+        fileFilterInput.focus();
+      }
+    });
 
-        const canvas = document.getElementById("canvasWheel");
-        const ctx = canvas.getContext("2d");
-        const danhSachGiai = [
-            { text: "Đi ăn nướng", color: "#ff2a5f" },
-            { text: "Đi lượn Lác", color: "#00f3ff" },
-            { text: "Đi vè ngụ", color: "#ffea00" },
-            { text: "Đi Mộc Châu", color: "#162044" } // Ô Mộc Châu màu tối vô vọng
-        ];
-        let gocHienTai = 0;
-        let daQuay = false;
+    // Toggle Star
+    let starred = false;
+    const starBtn = document.getElementById('starBtn');
+    const starCount = document.getElementById('starCount');
+    const sidebarStarCount = document.getElementById('sidebarStarCount');
+    const starLabel = document.getElementById('starLabel');
+    const starIcon = document.getElementById('starIcon');
 
-        function veVongQuay(gocXoay = 0) {
-            let soPhan = danhSachGiai.length;
-            let gocMoiPhan = (2 * Math.PI) / soPhan;
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+    starBtn.addEventListener('click', () => {
+      starred = !starred;
+      const count = starred ? 1 : 0;
+      starCount.textContent = count;
+      sidebarStarCount.textContent = count;
+      starLabel.textContent = starred ? 'Đã gắn sao' : 'Ngôi sao';
+      starIcon.style.color = starred ? '#e3b341' : 'var(--text-secondary)';
+    });
 
-            for (let i = 0; i < soPhan; i++) {
-                ctx.save();
-                ctx.beginPath();
-                ctx.moveTo(150, 150);
-                ctx.arc(150, 150, 145, gocXoay + i * gocMoiPhan, gocXoay + (i + 1) * gocMoiPhan);
-                ctx.closePath();
-                ctx.fillStyle = danhSachGiai[i].color;
-                ctx.fill();
-                ctx.strokeStyle = "#05070e";
-                ctx.lineWidth = 3;
-                ctx.stroke();
+    // Toggle "Mã số" Clone Dropdown
+    const codeBtn = document.getElementById('codeBtn');
+    const codeDropdown = document.getElementById('codeDropdown');
+    const copyCloneBtn = document.getElementById('copyCloneBtn');
 
-                ctx.save();
-                ctx.translate(150, 150);
-                ctx.rotate(gocXoay + i * gocMoiPhan + gocMoiPhan / 2);
-                ctx.textAlign = "right";
-                ctx.fillStyle = (i === 3) ? "#445588" : "#05070e";
-                ctx.font = "bold 15px 'Chakra Petch', Arial";
-                ctx.fillText(danhSachGiai[i].text, 125, 6);
-                ctx.restore();
-                ctx.restore();
-            }
-        }
-        veVongQuay(0);
+    codeBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      codeDropdown.classList.toggle('show');
+    });
 
-        function taoHieuUngNoTung(x, y) {
-            const mauSacList = ["#00ff88", "#00f3ff", "#ffea00", "#ff2a5f", "#ffffff"];
-            for (let i = 0; i < 35; i++) {
-                const hatNo = document.createElement("div");
-                hatNo.className = "explosion-particle";
-                hatNo.style.left = x + "px";
-                hatNo.style.top = y + "px";
-                
-                let mau = mauSacList[Math.floor(Math.random() * mauSacList.length)];
-                hatNo.style.background = mau;
-                hatNo.style.boxShadow = `0 0 14px ${mau}, 0 0 25px #ffffff`;
+    document.addEventListener('click', (e) => {
+      if (!codeDropdown.contains(e.target) && e.target !== codeBtn) {
+        codeDropdown.classList.remove('show');
+      }
+    });
 
-                const goc = Math.PI * 2 * Math.random();
-                const khoangCach = 60 + Math.random() * 110;
-                hatNo.style.setProperty("--tx", Math.cos(goc) * khoangCach + "px");
-                hatNo.style.setProperty("--ty", Math.sin(goc) * khoangCach + "px");
+    copyCloneBtn.addEventListener('click', () => {
+      const input = document.getElementById('cloneUrlInput');
+      input.select();
+      navigator.clipboard?.writeText(input.value);
+      copyCloneBtn.textContent = 'Đã chép!';
+      setTimeout(() => copyCloneBtn.textContent = 'Chép', 1500);
+    });
 
-                document.body.appendChild(hatNo);
-                setTimeout(() => hatNo.remove(), 800);
-            }
-        }
+    // Navigation Tabs Active Switch
+    document.querySelectorAll('.nav-tab').forEach(tab => {
+      tab.addEventListener('click', (e) => {
+        e.preventDefault();
+        document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+      });
+    });
 
-        function quayVongQuay() {
-            if (daQuay) return;
-            daQuay = true;
-            document.getElementById("spinBtn").disabled = true;
+    // File Preview Modal
+    const sampleContents = {
+      'index.html': `<!DOCTYPE html>\n<html lang="vi">\n<head>\n  <meta charset="UTF-8">\n  <title>tuniuuyin</title>\n</head>\n<body>\n  <h1>Hello tuniuuyin!</h1>\n</body>\n</html>`,
+      'thefuck.jpg.jfif': '[Tệp hình ảnh nhị phân: thefuck.jpg.jfif - Đã tải lên 11 giờ trước]',
+      'tun.jpg.jpg': '[Tệp hình ảnh nhị phân: tun.jpg.jpg - Đã tải lên 11 giờ trước]'
+    };
 
-            // XÁC SUẤT TRÚNG MỘC CHÂU TUYỆT ĐỐI BẰNG 0 (Chỉ random các ô 0, 1, 2)
-            let cacODuocPhepTrung = [0, 1, 2];
-            let indexTrung = cacODuocPhepTrung[Math.floor(Math.random() * cacODuocPhepTrung.length)];
+    const fileModal = document.getElementById('fileModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalBody = document.getElementById('modalBody');
 
-            let phanThuongTrung = danhSachGiai[indexTrung].text;
-            let soPhan = danhSachGiai.length;
-            let gocMotPhan = 360 / soPhan; // 90 độ mỗi ô
+    document.querySelectorAll('.file-link').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const file = link.dataset.file;
+        modalTitle.textContent = file;
+        modalBody.textContent = sampleContents[file] || '';
+        fileModal.classList.add('show');
+      });
+    });
 
-            // Toán học căn chỉnh chính xác để ô trúng dừng ngay dưới mũi tên ở đỉnh (270 độ)
-            let gocTamCuaO = indexTrung * gocMotPhan + gocMotPhan / 2;
-            let gocCanDich = 270 - gocTamCuaO;
-            let gocMucTieu = 360 * 6 + (gocCanDich - (gocHienTai % 360));
+    document.getElementById('closeModalBtn').addEventListener('click', () => {
+      fileModal.classList.remove('show');
+    });
 
-            gocHienTai += gocMucTieu;
-            canvas.style.transform = `rotate(${gocHienTai}deg)`;
+    fileModal.addEventListener('click', (e) => {
+      if (e.target === fileModal) fileModal.classList.remove('show');
+    });
 
-            setTimeout(() => {
-                taoHieuUngNoTung(window.innerWidth / 2, window.innerHeight / 2);
-                document.getElementById("rewardText").innerText = `Chúc mừng iu quay trúng: "${phanThuongTrung}"!`;
-                document.getElementById("rewardPopup").style.display = "flex";
-            }, 4000);
-        }
-
-        function xacNhanThuong() {
-            document.getElementById("confirmBtn").style.display = "none";
-            document.getElementById("successMsg").style.display = "block";
-            setTimeout(() => {
-                document.getElementById("rewardPopup").style.display = "none";
-            }, 1800);
-        }
-
-        function kiemTra(nutDuocBam, laDapAnDung) {
-            const cacNutTrongCau = nutDuocBam.parentElement.querySelectorAll(".opt-btn");
-            cacNutTrongCau.forEach(btn => btn.disabled = true);
-
-            if (laDapAnDung) {
-                nutDuocBam.classList.add("correct");
-                diemSo++;
-                document.getElementById("scoreBoard").innerText = "SCORE: " + diemSo + " / 5";
-            } else {
-                nutDuocBam.classList.add("wrong");
-                const khungAnhSai = document.getElementById("wrongOverlay");
-                khungAnhSai.style.display = "flex";
-
-                clearTimeout(boDemThoiGian);
-                boDemThoiGian = setTimeout(() => {
-                    khungAnhSai.style.display = "none";
-                }, 2000);
-            }
-        }
-    </script>
+    // Add README button action
+    document.getElementById('addReadmeBtn').addEventListener('click', () => {
+      const readmeContent = document.getElementById('readmeContent');
+      readmeContent.style.textAlign = 'left';
+      readmeContent.innerHTML = `
+        <h2 style="font-size: 22px; border-bottom: 1px solid var(--border-muted); padding-bottom: 8px; margin-bottom: 12px;"># tuniuuyin</h2>
+        <p style="color: var(--text-primary); margin: 0;">Kho lưu trữ dự án của <strong>anhtuan8882-ctrl</strong>.</p>
+      `;
+    });
+  </script>
 </body>
 </html>
