@@ -3,98 +3,193 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>5 câu hỏi về sở thích của anh Tún</title>
+    <title>5 câu hỏi về sở thích của anh Tún - Game Mode</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;700&display=swap');
+
+        * {
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            background-color: #090921;
+            font-family: 'Chakra Petch', Arial, sans-serif;
+            background-color: #060612;
+            /* Tạo nền lưới game công nghệ */
+            background-image: 
+                linear-gradient(rgba(0, 243, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 243, 255, 0.05) 1px, transparent 1px);
+            background-size: 30px 30px;
             color: #ffffff;
             text-align: center;
-            padding: 30px 15px 60px;
+            padding: 25px 15px 70px;
             margin: 0;
         }
-        h1 {
-            color: #ca2424;
-            font-size: 28px;
-            margin-bottom: 15px;
+
+        /* Thanh trạng thái Game (HUD) trên cùng */
+        .game-hud {
+            max-width: 580px;
+            margin: 0 auto 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(13, 17, 38, 0.9);
+            border: 1px solid #00f3ff;
+            box-shadow: 0 0 12px rgba(0, 243, 255, 0.25);
+            padding: 10px 18px;
+            border-radius: 6px;
+            font-size: 15px;
+            letter-spacing: 1px;
         }
-        /* Ảnh 1 chính ở đầu trang */
-        .main-img {
-            width: 240px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+        .hud-badge {
+            color: #00f3ff;
+            font-weight: bold;
+        }
+        .hud-score {
+            color: #ffea00;
+            font-weight: bold;
+            text-shadow: 0 0 8px rgba(255, 234, 0, 0.6);
+        }
+
+        /* Tiêu đề chính phát sáng kiểu Neon */
+        h1 {
+            color: #ff2a5f;
+            font-size: 28px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            text-shadow: 0 0 12px rgba(255, 42, 95, 0.7);
+            margin-bottom: 20px;
+        }
+
+        /* Khung Ảnh 1 kiểu Avatar nhân vật Game */
+        .avatar-frame {
+            display: inline-block;
+            padding: 6px;
+            background: linear-gradient(135deg, #00f3ff, #ff2a5f);
+            border-radius: 14px;
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.4);
             margin-bottom: 30px;
         }
-        /* Khung chứa 5 câu hỏi xếp dọc */
+        .main-img {
+            display: block;
+            width: 220px;
+            border-radius: 10px;
+        }
+
+        /* Danh sách 5 câu hỏi xếp dọc */
         .quiz-container {
-            max-width: 550px;
+            max-width: 580px;
             margin: 0 auto;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 22px;
         }
+
+        /* Thẻ câu hỏi kiểu bảng nhiệm vụ */
         .question-card {
-            background-color: #14143a;
-            border: 1px solid #2a2a66;
-            border-radius: 12px;
+            background: linear-gradient(145deg, #0f132e, #090b1c);
+            border: 1px solid #26316e;
+            border-left: 4px solid #00f3ff;
+            border-radius: 10px;
             padding: 20px;
             text-align: left;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+            position: relative;
         }
+
+        .quest-label {
+            display: inline-block;
+            font-size: 12px;
+            color: #00f3ff;
+            background: rgba(0, 243, 255, 0.12);
+            padding: 3px 8px;
+            border-radius: 4px;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
         .question-title {
             font-size: 18px;
             font-weight: bold;
-            color: #e0dfff;
+            color: #f0f4ff;
             margin-top: 0;
-            margin-bottom: 15px;
-        }
-        /* Hai nút đáp án A và B */
-        .options {
-            display: flex;
-            gap: 12px;
-        }
-        .opt-btn {
-            flex: 1;
-            padding: 12px 15px;
-            font-size: 16px;
-            font-weight: bold;
-            background-color: #1f1f52;
-            color: #ffffff;
-            border: 2px solid #3c3c8c;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            text-align: left;
-        }
-        .opt-btn:hover:not(:disabled) {
-            background-color: #2b2b6e;
-        }
-        
-        /* Hiệu ứng khi nút bị khóa (đã chọn) */
-        .opt-btn:disabled {
-            cursor: not-allowed;
-            opacity: 0.85;
+            margin-bottom: 16px;
         }
 
-        /* Hiệu ứng khi chọn ĐÚNG: chữ xanh + tích xanh */
+        /* Hai nút đáp án A và B kiểu phím bấm Game 3D */
+        .options {
+            display: flex;
+            gap: 14px;
+        }
+
+        .opt-btn {
+            flex: 1;
+            padding: 14px 16px;
+            font-family: 'Chakra Petch', Arial, sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+            background-color: #161c42;
+            color: #ffffff;
+            border: 2px solid #354494;
+            border-bottom: 5px solid #202a63; /* Tạo độ dày phím 3D */
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            text-align: left;
+        }
+
+        .opt-btn:hover:not(:disabled) {
+            background-color: #1f285e;
+            border-color: #00f3ff;
+            border-bottom-color: #0099a1;
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.35);
+            transform: translateY(-2px);
+        }
+
+        .opt-btn:active:not(:disabled) {
+            transform: translateY(2px);
+            border-bottom-width: 2px;
+        }
+
+        /* Khi nút bị khóa sau 1 lần chọn */
+        .opt-btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.75;
+        }
+
+        /* Hiệu ứng chọn ĐÚNG: Xanh Neon + Tích xanh */
         .opt-btn.correct {
-            color: #00e676;
-            border-color: #00e676;
-            background-color: rgba(0, 230, 118, 0.15);
+            opacity: 1 !important;
+            color: #00ff88;
+            border-color: #00ff88;
+            border-bottom-color: #009952;
+            background-color: rgba(0, 255, 136, 0.15);
+            box-shadow: 0 0 18px rgba(0, 255, 136, 0.45);
         }
         .opt-btn.correct::after {
-            content: " ✓";
+            content: " ✔";
             font-size: 18px;
             float: right;
         }
-        /* Hiệu ứng khi chọn SAI: chữ đỏ */
+
+        /* Hiệu ứng chọn SAI: Đỏ cảnh báo + Rung nhẹ */
         .opt-btn.wrong {
-            color: #ff3d3d;
-            border-color: #ff3d3d;
-            background-color: rgba(255, 61, 61, 0.15);
+            opacity: 1 !important;
+            color: #ff2a5f;
+            border-color: #ff2a5f;
+            border-bottom-color: #9e1437;
+            background-color: rgba(255, 42, 95, 0.18);
+            box-shadow: 0 0 18px rgba(255, 42, 95, 0.5);
+            animation: shake 0.35s ease;
         }
 
-        /* Khung popup hiển thị ảnh 2 trong 2 giây khi chọn sai */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-6px); }
+            50% { transform: translateX(6px); }
+            75% { transform: translateX(-4px); }
+        }
+
+        /* Popup hiển thị Ảnh 2 trong 2 giây khi chọn sai */
         #wrongOverlay {
             display: none;
             position: fixed;
@@ -102,97 +197,122 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
+            background-color: rgba(5, 5, 15, 0.88);
+            backdrop-filter: blur(4px);
             z-index: 9999;
             justify-content: center;
             align-items: center;
             flex-direction: column;
         }
+        .alert-text {
+            color: #ff2a5f;
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+            text-shadow: 0 0 10px #ff2a5f;
+        }
         #wrongOverlay img {
             max-width: 85%;
-            max-height: 75%;
-            border-radius: 14px;
-            border: 3px solid #ff3d3d;
-            box-shadow: 0 0 25px rgba(255, 61, 61, 0.6);
+            max-height: 70%;
+            border-radius: 12px;
+            border: 3px solid #ff2a5f;
+            box-shadow: 0 0 30px rgba(255, 42, 95, 0.7);
         }
     </style>
 </head>
 <body>
 
+    <!-- Thanh trạng thái trò chơi -->
+    <div class="game-hud">
+        <span class="hud-badge">PLAYER: UYNN</span>
+        <span class="hud-score" id="scoreBoard">SCORE: 0 / 5</span>
+    </div>
+
     <h1>5 câu hỏi về sở thích của anh Tún</h1>
 
-    <!-- Nhớ điền đúng tên file ẢNH 1 của bạn vào src="" -->
-    <img class="main-img" src="tun.jpg.jpg" alt="Ảnh anh Tún">
+    <!-- Khung Ảnh 1 (nhớ điền đúng tên file ảnh 1 của bạn vào src="") -->
+    <div class="avatar-frame">
+        <img class="main-img" src="tun.jpg.jpg" alt="Ảnh anh Tún">
+    </div>
 
     <div class="quiz-container">
         <!-- CÂU 1 -->
         <div class="question-card">
+            <span class="quest-label">QUEST 01</span>
             <p class="question-title">Câu 1: Món ăn anh Tún thích nhất là gì?</p>
             <div class="options">
-                <button class="opt-btn" onclick="kiemTra(this, true)">A. Canh cải cà chua Uynn nấu</button>
-                <button class="opt-btn" onclick="kiemTra(this, false)">B. Canh trứng cà chua
+                <button class="opt-btn" onclick="kiemTra(this, true)">A. Lạp xưởng nướng đá</button>
+                <button class="opt-btn" onclick="kiemTra(this, false)">B.Xúc xích ponie
             </div>
         </div>
 
         <!-- CÂU 2 -->
         <div class="question-card">
-            <p class="question-title">Câu 2: Lúc rảnh rỗi anh Tún thích làm gì nhất?</p>
+            <span class="quest-label">QUEST 02</span>
+            <p class="question-title">Câu 2: Lúc ở vứi Uyin anh Tún thích làm gì nhất?</p>
             <div class="options">
-                <button class="opt-btn" onclick="kiemTra(this, false)">A. Đi ngủ cả ngày
-                <button class="opt-btn" onclick="kiemTra(this, true)">B. Đi lượn Lác vứi Uynn</button>
+                <button class="opt-btn" onclick="kiemTra(this, false)">A. Ôm ngụ</button>
+                <button class="opt-btn" onclick="kiemTra(this, true)">B. Rủ chơi game
             </div>
         </div>
 
         <!-- CÂU 3 -->
         <div class="question-card">
-            <p class="question-title">Câu 3: Đồ uống chân ái của anh Tún là?</p>
+            <span class="quest-label">QUEST 03</span>
+            <p class="question-title">Câu 3: Cung hoàng đạo của anh Tún là?</p>
             <div class="options">
-                <button class="opt-btn" onclick="kiemTra(this, true)">A. Trà sữa matcha</button>
-                <button class="opt-btn" onclick="kiemTra(this, false)">B. Sting
+                <button class="opt-btn" onclick="kiemTra(this, true)">A. Song Tử
+                <button class="opt-btn" onclick="kiemTra(this, false)">B. Ma kết</button>
             </div>
         </div>
 
         <!-- CÂU 4 -->
         <div class="question-card">
-            <p class="question-title">Câu 4: Anh Tún mún Uyin bao nhiu cân?</p>
+            <span class="quest-label">QUEST 04</span>
+            <p class="question-title">Câu 4: Anh Tún thích đi đâu vào cuối tuần?</p>
             <div class="options">
-                <button class="opt-btn" onclick="kiemTra(this, false)">A. 48KG
-                <button class="opt-btn" onclick="kiemTra(this, true)">B. 52KG</button>
+                <button class="opt-btn" onclick="kiemTra(this, false)">A. Ở nhà một mình</button>
+                <button class="opt-btn" onclick="kiemTra(this, true)">B. Đi lượn phố cùng Uynn</button>
             </div>
         </div>
 
         <!-- CÂU 5 -->
         <div class="question-card">
-            <p class="question-title">Câu 5: Anh Tún yêu ai nhất</p>
+            <span class="quest-label">QUEST 05</span>
+            <p class="question-title">Câu 5: Anh Tún thích chơi game thể loại gì nhất?</p>
             <div class="options">
-                <button class="opt-btn" onclick="kiemTra(this, true)">A. Uynn Ủn Ỉn chứ ai</button>
-                <button class="opt-btn" onclick="kiemTra(this, false)">B. Uynn Píp Píp</button>
+                <button class="opt-btn" onclick="kiemTra(this, true)">A. Hành động thế giới mở</button>
+                <button class="opt-btn" onclick="kiemTra(this, false)">B. Sinh tồn thế giới mở</button>
             </div>
         </div>
     </div>
 
-    <!-- Lớp phủ hiển thị Ảnh 2 khi bấm sai (nhớ điền đúng tên file ẢNH 2 vào src="") -->
+    <!-- Màn hình cảnh báo khi chọn sai: hiện Ảnh 2 trong 2 giây -->
     <div id="wrongOverlay">
+        <div class="alert-text">⚠ SAI RỒI!</div>
         <img src="thefuck.jpg.jfif" alt="Chọn sai rồi!">
     </div>
 
     <script>
         let boDemThoiGian;
+        let diemSo = 0;
 
         function kiemTra(nutDuocBam, laDapAnDung) {
-            // Lấy cả 2 nút A và B trong câu hỏi hiện tại
             const cacNutTrongCau = nutDuocBam.parentElement.querySelectorAll(".opt-btn");
 
-            // Khóa tất cả các nút trong câu này lại ngay lập tức để chỉ được chọn 1 lần
+            // Khóa cứng cả 2 nút trong câu này để chỉ được chọn 1 lần
             cacNutTrongCau.forEach(btn => {
                 btn.disabled = true;
             });
 
             if (laDapAnDung) {
-                // Nếu chọn ĐÚNG: hiện tích xanh và chữ chuyển xanh
+                // Chọn ĐÚNG: chữ xanh + tích xanh + cộng điểm
                 nutDuocBam.classList.add("correct");
+                diemSo++;
+                document.getElementById("scoreBoard").innerText = "SCORE: " + diemSo + " / 5";
             } else {
-                // Nếu chọn SAI: chữ chuyển đỏ và hiện ảnh 2 trong đúng 2 giây (2000ms)
+                // Chọn SAI: chữ đỏ + rung nút + hiện ảnh 2 trong đúng 2 giây
                 nutDuocBam.classList.add("wrong");
                 const khungAnhSai = document.getElementById("wrongOverlay");
                 khungAnhSai.style.display = "flex";
