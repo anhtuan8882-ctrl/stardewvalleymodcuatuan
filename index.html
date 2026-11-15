@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>5 câu hỏi về sở thích của anh Tún - Game Mode</title>
+    <title>5 câu hỏi về sở thích của anh Tún - Action Mode</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&display=swap');
 
         * {
             box-sizing: border-box;
@@ -13,109 +13,121 @@
 
         body {
             font-family: 'Chakra Petch', Arial, sans-serif;
-            background-color: #060612;
-            /* Tạo nền lưới game công nghệ */
+            background-color: #05070e;
+            /* Nền game hành động: Lưới chiến thuật + ánh sáng đỏ/xanh ở 2 góc + họa tiết chéo */
             background-image: 
-                linear-gradient(rgba(0, 243, 255, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 243, 255, 0.05) 1px, transparent 1px);
-            background-size: 30px 30px;
+                radial-gradient(circle at 15% 15%, rgba(0, 243, 255, 0.14), transparent 40%),
+                radial-gradient(circle at 85% 85%, rgba(255, 42, 95, 0.14), transparent 40%),
+                repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.015) 0px, rgba(255, 255, 255, 0.015) 2px, transparent 2px, transparent 10px),
+                linear-gradient(rgba(0, 243, 255, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 243, 255, 0.04) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 20px 20px, 35px 35px, 35px 35px;
+            background-attachment: fixed;
             color: #ffffff;
             text-align: center;
-            padding: 25px 15px 70px;
+            padding: 25px 15px 75px;
             margin: 0;
+            overflow-x: hidden;
         }
 
-        /* Thanh trạng thái Game (HUD) trên cùng */
+        /* Thanh trạng thái Game (HUD) góc vát chiến thuật */
         .game-hud {
-            max-width: 580px;
-            margin: 0 auto 20px;
+            max-width: 600px;
+            margin: 0 auto 24px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(13, 17, 38, 0.9);
-            border: 1px solid #00f3ff;
-            box-shadow: 0 0 12px rgba(0, 243, 255, 0.25);
-            padding: 10px 18px;
-            border-radius: 6px;
+            background: linear-gradient(90deg, rgba(0, 243, 255, 0.15), rgba(13, 18, 36, 0.95), rgba(255, 42, 95, 0.15));
+            border-top: 2px solid #00f3ff;
+            border-bottom: 2px solid #ff2a5f;
+            padding: 12px 24px;
+            /* Cắt vát 2 góc đối diện */
+            clip-path: polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px);
             font-size: 15px;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
         }
         .hud-badge {
             color: #00f3ff;
             font-weight: bold;
+            text-shadow: 0 0 8px rgba(0, 243, 255, 0.6);
         }
         .hud-score {
             color: #ffea00;
             font-weight: bold;
-            text-shadow: 0 0 8px rgba(255, 234, 0, 0.6);
+            text-shadow: 0 0 10px rgba(255, 234, 0, 0.8);
         }
 
-        /* Tiêu đề chính phát sáng kiểu Neon */
+        /* Tiêu đề chính kiểu tựa game hành động */
         h1 {
-            color: #ff2a5f;
+            color: #ffffff;
             font-size: 28px;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
-            text-shadow: 0 0 12px rgba(255, 42, 95, 0.7);
-            margin-bottom: 20px;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px #ff2a5f, 0 0 25px #ff2a5f;
+            margin-bottom: 22px;
         }
 
-        /* Khung Ảnh 1 kiểu Avatar nhân vật Game */
+        /* Khung Ảnh 1 vát 4 góc kiểu thẻ nhân vật */
         .avatar-frame {
             display: inline-block;
-            padding: 6px;
+            padding: 5px;
             background: linear-gradient(135deg, #00f3ff, #ff2a5f);
-            border-radius: 14px;
-            box-shadow: 0 0 20px rgba(0, 243, 255, 0.4);
-            margin-bottom: 30px;
+            clip-path: polygon(18px 0, calc(100% - 18px) 0, 100% 18px, 100% calc(100% - 18px), calc(100% - 18px) 100%, 18px 100%, 0 calc(100% - 18px), 0 18px);
+            margin-bottom: 32px;
+            filter: drop-shadow(0 0 15px rgba(0, 243, 255, 0.45));
         }
         .main-img {
             display: block;
             width: 220px;
-            border-radius: 10px;
+            clip-path: polygon(15px 0, calc(100% - 15px) 0, 100% 15px, 100% calc(100% - 15px), calc(100% - 15px) 100%, 15px 100%, 0 calc(100% - 15px), 0 15px);
         }
 
         /* Danh sách 5 câu hỏi xếp dọc */
         .quiz-container {
-            max-width: 580px;
+            max-width: 600px;
             margin: 0 auto;
             display: flex;
             flex-direction: column;
-            gap: 22px;
+            gap: 24px;
         }
 
-        /* Thẻ câu hỏi kiểu bảng nhiệm vụ */
+        /* Lớp viền ngoài tạo khung góc cạnh sắc nét cho từng câu hỏi */
+        .question-card-border {
+            padding: 2px;
+            background: linear-gradient(135deg, #00f3ff 0%, #1d2b64 50%, #ff2a5f 100%);
+            clip-path: polygon(0 0, calc(100% - 22px) 0, 100% 22px, 100% 100%, 22px 100%, 0 calc(100% - 22px));
+            filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.8));
+        }
+
         .question-card {
-            background: linear-gradient(145deg, #0f132e, #090b1c);
-            border: 1px solid #26316e;
-            border-left: 4px solid #00f3ff;
-            border-radius: 10px;
-            padding: 20px;
+            background: linear-gradient(160deg, #0c1124, #070914);
+            padding: 22px;
             text-align: left;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+            clip-path: polygon(0 0, calc(100% - 21px) 0, 100% 21px, 100% 100%, 21px 100%, 0 calc(100% - 21px));
             position: relative;
         }
 
         .quest-label {
             display: inline-block;
             font-size: 12px;
-            color: #00f3ff;
-            background: rgba(0, 243, 255, 0.12);
-            padding: 3px 8px;
-            border-radius: 4px;
-            margin-bottom: 8px;
-            letter-spacing: 1px;
+            font-weight: bold;
+            color: #05070e;
+            background: #00f3ff;
+            padding: 3px 12px;
+            clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+            margin-bottom: 10px;
+            letter-spacing: 1.5px;
         }
 
         .question-title {
             font-size: 18px;
             font-weight: bold;
-            color: #f0f4ff;
+            color: #f4f7ff;
             margin-top: 0;
-            margin-bottom: 16px;
+            margin-bottom: 18px;
         }
 
-        /* Hai nút đáp án A và B kiểu phím bấm Game 3D */
+        /* Hai nút đáp án A và B góc vát kiểu vũ khí/kỹ năng */
         .options {
             display: flex;
             gap: 14px;
@@ -123,47 +135,77 @@
 
         .opt-btn {
             flex: 1;
-            padding: 14px 16px;
+            position: relative;
+            overflow: hidden; /* Giữ vệt sáng lấp lánh chạy gọn trong nút */
+            padding: 15px 18px;
             font-family: 'Chakra Petch', Arial, sans-serif;
             font-size: 16px;
             font-weight: bold;
-            background-color: #161c42;
+            background: linear-gradient(180deg, #162044, #0d132b);
             color: #ffffff;
-            border: 2px solid #354494;
-            border-bottom: 5px solid #202a63; /* Tạo độ dày phím 3D */
-            border-radius: 8px;
+            border: 1px solid #3c54a8;
+            border-left: 4px solid #00f3ff;
+            clip-path: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px);
             cursor: pointer;
-            transition: all 0.15s ease;
+            transition: all 0.2s ease;
             text-align: left;
         }
 
+        /* Tia sáng lấp lánh chạy ngang qua nút */
+        .opt-btn::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -120%;
+            width: 70%;
+            height: 100%;
+            background: linear-gradient(
+                120deg,
+                transparent,
+                rgba(255, 255, 255, 0.65),
+                rgba(0, 243, 255, 0.4),
+                transparent
+            );
+            transform: skewX(-25deg);
+        }
+
+        /* Kích hoạt vệt sáng lấp lánh khi rê chuột hoặc khi bấm */
+        .opt-btn:hover:not(:disabled)::before,
+        .opt-btn.sparkle-active::before {
+            animation: shineSweep 0.65s ease-out;
+        }
+
+        @keyframes shineSweep {
+            0% { left: -120%; }
+            100% { left: 160%; }
+        }
+
         .opt-btn:hover:not(:disabled) {
-            background-color: #1f285e;
+            background: linear-gradient(180deg, #1f2e61, #131c3d);
             border-color: #00f3ff;
-            border-bottom-color: #0099a1;
-            box-shadow: 0 0 15px rgba(0, 243, 255, 0.35);
             transform: translateY(-2px);
+            text-shadow: 0 0 8px rgba(0, 243, 255, 0.8);
         }
 
         .opt-btn:active:not(:disabled) {
-            transform: translateY(2px);
-            border-bottom-width: 2px;
+            transform: scale(0.97);
         }
 
         /* Khi nút bị khóa sau 1 lần chọn */
         .opt-btn:disabled {
             cursor: not-allowed;
-            opacity: 0.75;
+            opacity: 0.65;
         }
 
-        /* Hiệu ứng chọn ĐÚNG: Xanh Neon + Tích xanh */
+        /* Hiệu ứng chọn ĐÚNG: Xanh Neon phát sáng lấp lánh + Tích xanh */
         .opt-btn.correct {
             opacity: 1 !important;
             color: #00ff88;
             border-color: #00ff88;
-            border-bottom-color: #009952;
-            background-color: rgba(0, 255, 136, 0.15);
-            box-shadow: 0 0 18px rgba(0, 255, 136, 0.45);
+            border-left-color: #00ff88;
+            background: linear-gradient(180deg, rgba(0, 255, 136, 0.28), rgba(0, 120, 65, 0.25));
+            text-shadow: 0 0 10px rgba(0, 255, 136, 0.9);
+            animation: pulseGlowGreen 1.2s infinite alternate;
         }
         .opt-btn.correct::after {
             content: " ✔";
@@ -171,22 +213,51 @@
             float: right;
         }
 
-        /* Hiệu ứng chọn SAI: Đỏ cảnh báo + Rung nhẹ */
+        @keyframes pulseGlowGreen {
+            from { filter: drop-shadow(0 0 4px rgba(0, 255, 136, 0.4)); }
+            to { filter: drop-shadow(0 0 14px rgba(0, 255, 136, 0.95)); }
+        }
+
+        /* Hiệu ứng chọn SAI: Đỏ cảnh báo + Rung giật */
         .opt-btn.wrong {
             opacity: 1 !important;
             color: #ff2a5f;
             border-color: #ff2a5f;
-            border-bottom-color: #9e1437;
-            background-color: rgba(255, 42, 95, 0.18);
-            box-shadow: 0 0 18px rgba(255, 42, 95, 0.5);
+            border-left-color: #ff2a5f;
+            background: linear-gradient(180deg, rgba(255, 42, 95, 0.3), rgba(130, 15, 45, 0.25));
+            text-shadow: 0 0 10px rgba(255, 42, 95, 0.9);
             animation: shake 0.35s ease;
         }
 
         @keyframes shake {
             0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-6px); }
-            50% { transform: translateX(6px); }
+            25% { transform: translateX(-7px); }
+            50% { transform: translateX(7px); }
             75% { transform: translateX(-4px); }
+        }
+
+        /* Hạt sao lấp lánh bung ra tại điểm click */
+        .sparkle-particle {
+            position: fixed;
+            pointer-events: none;
+            width: 8px;
+            height: 8px;
+            background: #ffffff;
+            clip-path: polygon(50% 0%, 65% 35%, 100% 50%, 65% 65%, 50% 100%, 35% 65%, 0% 50%, 35% 35%);
+            box-shadow: 0 0 10px #00f3ff, 0 0 18px #ffffff;
+            z-index: 10000;
+            animation: particleFly 0.7s ease-out forwards;
+        }
+
+        @keyframes particleFly {
+            0% {
+                opacity: 1;
+                transform: translate(0, 0) scale(1.2) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(var(--tx), var(--ty)) scale(0.2) rotate(180deg);
+            }
         }
 
         /* Popup hiển thị Ảnh 2 trong 2 giây khi chọn sai */
@@ -197,8 +268,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(5, 5, 15, 0.88);
-            backdrop-filter: blur(4px);
+            background-color: rgba(4, 6, 14, 0.9);
+            backdrop-filter: blur(5px);
             z-index: 9999;
             justify-content: center;
             align-items: center;
@@ -206,18 +277,25 @@
         }
         .alert-text {
             color: #ff2a5f;
-            font-size: 24px;
+            font-size: 26px;
             font-weight: bold;
-            letter-spacing: 2px;
-            margin-bottom: 12px;
-            text-shadow: 0 0 10px #ff2a5f;
+            letter-spacing: 3px;
+            margin-bottom: 14px;
+            text-shadow: 0 0 14px #ff2a5f;
         }
-        #wrongOverlay img {
+        .wrong-img-frame {
+            padding: 4px;
+            background: #ff2a5f;
+            clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
             max-width: 85%;
             max-height: 70%;
-            border-radius: 12px;
-            border: 3px solid #ff2a5f;
-            box-shadow: 0 0 30px rgba(255, 42, 95, 0.7);
+            display: flex;
+        }
+        #wrongOverlay img {
+            max-width: 100%;
+            max-height: 68vh;
+            display: block;
+            clip-path: polygon(18px 0, 100% 0, 100% calc(100% - 18px), calc(100% - 18px) 100%, 0 100%, 0 18px);
         }
     </style>
 </head>
@@ -225,80 +303,112 @@
 
     <!-- Thanh trạng thái trò chơi -->
     <div class="game-hud">
-        <span class="hud-badge">PLAYER: UYNN</span>
+        <span class="hud-badge">▶ PLAYER: UYNN</span>
         <span class="hud-score" id="scoreBoard">SCORE: 0 / 5</span>
     </div>
 
     <h1>5 câu hỏi về sở thích của anh Tún</h1>
 
-    <!-- Khung Ảnh 1 (nhớ điền đúng tên file ảnh 1 của bạn vào src="") -->
+    <!-- Khung Ảnh 1 góc vát nhân vật -->
     <div class="avatar-frame">
         <img class="main-img" src="tun.jpg.jpg" alt="Ảnh anh Tún">
     </div>
 
     <div class="quiz-container">
         <!-- CÂU 1 -->
-        <div class="question-card">
-            <span class="quest-label">QUEST 01</span>
-            <p class="question-title">Câu 1: Món ăn anh Tún thích nhất là gì?</p>
-            <div class="options">
-                <button class="opt-btn" onclick="kiemTra(this, true)">A. Lạp xưởng nướng đá</button>
-                <button class="opt-btn" onclick="kiemTra(this, false)">B.Xúc xích ponie
+        <div class="question-card-border">
+            <div class="question-card">
+                <span class="quest-label">MISSION 01</span>
+                <p class="question-title">Câu 1: Món ăn anh Tún thích nhất là gì?</p>
+                <div class="options">
+                    <button class="opt-btn" onclick="kiemTra(event, this, true)">A. Lạp xưởng nướng đá</button>
+                    <button class="opt-btn" onclick="kiemTra(event, this, false)">B. Xúc xích ponie</button>
+                </div>
             </div>
         </div>
 
         <!-- CÂU 2 -->
-        <div class="question-card">
-            <span class="quest-label">QUEST 02</span>
-            <p class="question-title">Câu 2: Lúc ở vứi Uyin anh Tún thích làm gì nhất?</p>
-            <div class="options">
-                <button class="opt-btn" onclick="kiemTra(this, false)">A. Ôm ngụ</button>
-                <button class="opt-btn" onclick="kiemTra(this, true)">B. Rủ chơi game
+        <div class="question-card-border">
+            <div class="question-card">
+                <span class="quest-label">MISSION 02</span>
+                <p class="question-title">Câu 2: Lúc ở vứi Uyin anh Tún thích làm gì nhất?</p>
+                <div class="options">
+                    <button class="opt-btn" onclick="kiemTra(event, this, false)">A. Ôm ngụ</button>
+                    <button class="opt-btn" onclick="kiemTra(event, this, true)">B. Rủ chơi game</button>
+                </div>
             </div>
         </div>
 
         <!-- CÂU 3 -->
-        <div class="question-card">
-            <span class="quest-label">QUEST 03</span>
-            <p class="question-title">Câu 3: Cung hoàng đạo của anh Tún là?</p>
-            <div class="options">
-                <button class="opt-btn" onclick="kiemTra(this, true)">A. Song Tử
-                <button class="opt-btn" onclick="kiemTra(this, false)">B. Ma kết</button>
+        <div class="question-card-border">
+            <div class="question-card">
+                <span class="quest-label">MISSION 03</span>
+                <p class="question-title">Câu 3: Cung hoàng đạo của anh Tún là?</p>
+                <div class="options">
+                    <button class="opt-btn" onclick="kiemTra(event, this, true)">A. Song Tử</button>
+                    <button class="opt-btn" onclick="kiemTra(event, this, false)">B. Ma kết</button>
+                </div>
             </div>
         </div>
 
         <!-- CÂU 4 -->
-        <div class="question-card">
-            <span class="quest-label">QUEST 04</span>
-            <p class="question-title">Câu 4: Anh Tún thích đi đâu vào cuối tuần?</p>
-            <div class="options">
-                <button class="opt-btn" onclick="kiemTra(this, false)">A. Ở nhà một mình</button>
-                <button class="opt-btn" onclick="kiemTra(this, true)">B. Đi lượn phố cùng Uynn</button>
+        <div class="question-card-border">
+            <div class="question-card">
+                <span class="quest-label">MISSION 04</span>
+                <p class="question-title">Câu 4: Anh Tún thích đi đâu vào cuối tuần?</p>
+                <div class="options">
+                    <button class="opt-btn" onclick="kiemTra(event, this, false)">A. Ở nhà một mình</button>
+                    <button class="opt-btn" onclick="kiemTra(event, this, true)">B. Đi lượn phố cùng Uynn</button>
+                </div>
             </div>
         </div>
 
         <!-- CÂU 5 -->
-        <div class="question-card">
-            <span class="quest-label">QUEST 05</span>
-            <p class="question-title">Câu 5: Anh Tún thích chơi game thể loại gì nhất?</p>
-            <div class="options">
-                <button class="opt-btn" onclick="kiemTra(this, true)">A. Hành động thế giới mở</button>
-                <button class="opt-btn" onclick="kiemTra(this, false)">B. Sinh tồn thế giới mở</button>
+        <div class="question-card-border">
+            <div class="question-card">
+                <span class="quest-label">MISSION 05</span>
+                <p class="question-title">Câu 5: Anh Tún thích chơi game thể loại gì nhất?</p>
+                <div class="options">
+                    <button class="opt-btn" onclick="kiemTra(event, this, true)">A. Hành động thế giới mở</button>
+                    <button class="opt-btn" onclick="kiemTra(event, this, false)">B. Sinh tồn thế giới mở</button>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- Màn hình cảnh báo khi chọn sai: hiện Ảnh 2 trong 2 giây -->
     <div id="wrongOverlay">
-        <div class="alert-text">⚠ SAI RỒI!</div>
-        <img src="thefuck.jpg.jfif" alt="Chọn sai rồi!">
+        <div class="alert-text">⚠ MISSION FAILED!</div>
+        <div class="wrong-img-frame">
+            <img src="thefuck.jpg.jfif" alt="Chọn sai rồi!">
+        </div>
     </div>
 
     <script>
         let boDemThoiGian;
         let diemSo = 0;
 
-        function kiemTra(nutDuocBam, laDapAnDung) {
+        // Hàm tạo hiệu ứng tia sao lấp lánh bung ra tại vị trí bấm chuột
+        function taoHieuUngLapLanh(x, y, mauSac) {
+            for (let i = 0; i < 14; i++) {
+                const hatSang = document.createElement("div");
+                hatSang.className = "sparkle-particle";
+                hatSang.style.left = x + "px";
+                hatSang.style.top = y + "px";
+                hatSang.style.background = mauSac;
+                hatSang.style.boxShadow = `0 0 10px ${mauSac}, 0 0 18px #ffffff`;
+
+                const goc = (Math.PI * 2 * i) / 14 + (Math.random() * 0.4);
+                const khoangCach = 35 + Math.random() * 45;
+                hatSang.style.setProperty("--tx", Math.cos(goc) * khoangCach + "px");
+                hatSang.style.setProperty("--ty", Math.sin(goc) * khoangCach + "px");
+
+                document.body.appendChild(hatSang);
+                setTimeout(() => hatSang.remove(), 700);
+            }
+        }
+
+        function kiemTra(suKien, nutDuocBam, laDapAnDung) {
             const cacNutTrongCau = nutDuocBam.parentElement.querySelectorAll(".opt-btn");
 
             // Khóa cứng cả 2 nút trong câu này để chỉ được chọn 1 lần
@@ -306,13 +416,23 @@
                 btn.disabled = true;
             });
 
+            // Kích hoạt vệt sáng quét ngang qua nút vừa bấm
+            nutDuocBam.classList.add("sparkle-active");
+
+            // Lấy tọa độ vị trí bấm để bung hạt lấp lánh
+            const rect = nutDuocBam.getBoundingClientRect();
+            const clickX = suKien.clientX || (rect.left + rect.width / 2);
+            const clickY = suKien.clientY || (rect.top + rect.height / 2);
+
             if (laDapAnDung) {
-                // Chọn ĐÚNG: chữ xanh + tích xanh + cộng điểm
+                // Chọn ĐÚNG: chữ xanh + tích xanh + lấp lánh xanh ngọc + cộng điểm
+                taoHieuUngLapLanh(clickX, clickY, "#00ff88");
                 nutDuocBam.classList.add("correct");
                 diemSo++;
                 document.getElementById("scoreBoard").innerText = "SCORE: " + diemSo + " / 5";
             } else {
-                // Chọn SAI: chữ đỏ + rung nút + hiện ảnh 2 trong đúng 2 giây
+                // Chọn SAI: chữ đỏ + lấp lánh đỏ + hiện ảnh 2 trong đúng 2 giây
+                taoHieuUngLapLanh(clickX, clickY, "#ff2a5f");
                 nutDuocBam.classList.add("wrong");
                 const khungAnhSai = document.getElementById("wrongOverlay");
                 khungAnhSai.style.display = "flex";
